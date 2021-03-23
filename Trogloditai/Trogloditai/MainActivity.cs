@@ -34,6 +34,7 @@ namespace Trogloditai
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             int id = item.ItemId;
+            Console.WriteLine("walas");
             if (id == Resource.Id.action_settings)
             {
                 return true;
