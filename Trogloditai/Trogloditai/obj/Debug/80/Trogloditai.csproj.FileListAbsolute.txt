@@ -1,0 +1,2 @@
+C:\Users\Laurynas\Desktop\Univeras\Antri Metai\4 semestras\Programu sistemu inzinerija\Appas\Trogloditai\Trogloditai\obj\Debug\80\MonoAndroid,Version=v8.0.AssemblyAttributes.cs
+C:\Users\Laurynas\Desktop\Univeras\Antri Metai\4 semestras\Programu sistemu inzinerija\Appas\Trogloditai\Trogloditai\obj\Debug\80\Trogloditai.nuget.stamp
