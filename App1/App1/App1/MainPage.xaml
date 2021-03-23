@@ -8,6 +8,7 @@
         <!-- Place new controls here -->
         <Label Text="Welcome to Xamarin.Forms!" 
            HorizontalOptions="Center"
+               BackgroundColor="Red"
            VerticalOptions="CenterAndExpand" />
     </StackLayout>
 
