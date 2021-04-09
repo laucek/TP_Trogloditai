@@ -8,8 +8,25 @@
         <!-- Place new controls here -->
         <Label Text="Welcome to Xamarin.Forms!" 
            HorizontalOptions="Center"
-               BackgroundColor="Red"
+               BackgroundColor="Blue"
            VerticalOptions="CenterAndExpand" />
+        <Button Text="Login"
+                TextColor="Black"
+                HorizontalOptions="Center"
+                BackgroundColor="White"
+                BorderColor="Black"
+                BorderWidth="2"
+                Clicked="NavigateButton_OnClicked"
+                VerticalOptions="CenterAndExpand" />
+        
+
+        <Button Text="Don't have an account? Register"
+                TextColor="Blue"
+                HorizontalOptions="Center"
+                BackgroundColor="Transparent"
+                BorderColor="Transparent"
+                Clicked="NavigateButton_OnClickedReg"
+                VerticalOptions="CenterAndExpand" />
     </StackLayout>
 
 </ContentPage>
