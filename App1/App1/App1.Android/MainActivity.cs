@@ -6,6 +6,9 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using System.IO;
+using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace App1.Droid
 {
@@ -19,6 +22,7 @@ namespace App1.Droid
 
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
             LoadApplication(new App());
         }
     }

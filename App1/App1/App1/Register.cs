@@ -68,7 +68,8 @@ namespace App1
 
         void OnButtonClicked(object sender, EventArgs args, Button butt)
         {
-            butt.Text = firstNameEntry.Text;
+            butt.Text = MySQLManager.InsertUser(new User(1, "A", "A", "A", "A", DateTime.Now));
+
         }
     }
 }
