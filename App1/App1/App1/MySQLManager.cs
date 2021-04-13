@@ -18,6 +18,18 @@ namespace App1
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
+
+                    MySqlCommand cmd = new MySqlCommand("insert into Users (username, email, password, first_name, registration_date) values " +
+                    "(@username, @email, @password, @first_name, @registration_date)", con);
+
+                    cmd.Parameters.AddWithValue("@username", user.username);
+                    cmd.Parameters.AddWithValue("@email", user.email);
+                    cmd.Parameters.AddWithValue("@password", user.password);
+                    cmd.Parameters.AddWithValue("@first_name", user.first_name);
+                    cmd.Parameters.AddWithValue("@registration_date", user.registration_date);
+                    cmd.ExecuteNonQuery();
+
+
                     return "Success";
                 }
             }

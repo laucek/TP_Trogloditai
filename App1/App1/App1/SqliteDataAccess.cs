@@ -25,7 +25,7 @@ namespace App1
             {
                 cnn.Open();
                 cnn.Execute("insert into Users (username, email, password, first_name, registration_date) values " +
-                    "(@UserName, @Email, @Password, @FirstName, @RegistrationDate)", user);
+                    "(@username, @email, @password, @first_name, @registration_date)", user);
             }
         }
 
