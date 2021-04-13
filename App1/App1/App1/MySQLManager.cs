@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
 namespace App1
 {
@@ -13,8 +13,8 @@ namespace App1
         {
             try
             {
-                MySqlConnection con = new MySqlConnection("Server=sql301.epizy.com;Port=3306;database=epiz_28350683_data;User Id=epiz_28350683;Password=oh7faxtRdFpI6;charset=utf8");
-
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection con = new MySqlConnection(connStr);
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
