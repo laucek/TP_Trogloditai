@@ -41,37 +41,37 @@ namespace App1
             return "WALAS";
         }
 
-        public static string LoadUsers()
+        public static List<User> LoadUsers()
         {
             try
             {
                 string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
-                MySqlConnection con = new MySqlConnection(connStr);
-                if (con.State == ConnectionState.Closed)
+                MySqlConnection conn = new MySqlConnection(connStr);
+
+                conn.Open();
+
+                string sql = "SELECT * FROM Users";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                List<User> users = new List<User>();
+
+                while (rdr.Read())
                 {
-                    con.Open();
+                    User usr = new User(int.Parse(rdr[0].ToString()), rdr[1].ToString(), rdr[2].ToString(),
+                        rdr[3].ToString(), rdr[4].ToString(), DateTime.Parse(rdr[5].ToString()));
 
-                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM Users", con);
-
-                    MySqlDataReader rdr = cmd.ExecuteReader();
-
-
-                    List<User> users = new List<User>();
-
-                    rdr.Read();
-                    
-                    rdr.Close();
-                    con.Close();
-
-                    return rdr[0] + " " + rdr[1];
+                    users.Add(usr);
                 }
+                rdr.Close();
+
+                return users;
             }
-            catch (MySqlException ex)
+            catch (Exception ex)
             {
-                //return new List<User>();
-                return "FAIL";
+                return new List<User>();
             }
-            return "WALAS";
+
         }
     }
 }
