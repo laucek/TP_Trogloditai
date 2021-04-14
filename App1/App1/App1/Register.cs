@@ -58,6 +58,7 @@ namespace App1
 
             password = new Entry
             {
+                IsPassword = true,
                 Placeholder = "Atleast 3 characters",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
@@ -65,6 +66,7 @@ namespace App1
 
             passwordconfirm = new Entry
             {
+                IsPassword = true,
                 Placeholder = "Atleast 3 characters",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
@@ -139,14 +141,22 @@ namespace App1
 
         bool MeetsCriteria()
         {
-            if(firstNameEntry.Text.Length >= 3 && username.Text.Length >= 3 && emailEntry.Text.Length >= 6 && emailEntry.Text.Contains("@") && password.Text.Length >= 3)
+
+            try
             {
-                if(password.Text == passwordconfirm.Text)
+                if (firstNameEntry.Text.Length >= 3 && username.Text.Length >= 3 && emailEntry.Text.Length >= 6 && emailEntry.Text.Contains("@") && password.Text.Length >= 3)
                 {
-                    return true;
+                    if (password.Text == passwordconfirm.Text)
+                    {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
     }
 }
