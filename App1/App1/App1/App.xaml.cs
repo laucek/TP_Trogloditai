@@ -16,15 +16,6 @@ namespace App1
             MainPage = new NavigationPage(new MainPage());
         }
 
-        public App(string filePath)
-        {
-            InitializeComponent();
-
-            MainPage = new NavigationPage(new MainPage());
-
-            FilePath = filePath;
-        }
-
         protected override void OnStart()
         {
             // Handle when your app starts
