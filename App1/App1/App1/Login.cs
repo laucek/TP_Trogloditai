@@ -9,8 +9,9 @@ namespace App1
 {
     public class Login : ContentPage
     {
-        Entry userNameEntry;
+        Entry emailEntry;
         Entry passwordEntry;
+        Label errorLabel;
 
         public Login ()
         {
@@ -24,7 +25,16 @@ namespace App1
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
-            userNameEntry = new Entry
+            errorLabel = new Label
+            {
+                IsVisible = false,
+                Text = "Something went wrong, check your credentials",
+                TextColor = Color.Red,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            emailEntry = new Entry
             {
                 Placeholder = "Enter your first name",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
@@ -45,17 +55,45 @@ namespace App1
                 Children = {
 
                     new Label { Text = "Login into your account", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.StartAndExpand },
-                    userNameEntry,
+                    emailEntry,
                     passwordEntry,
-
-                    butt
+                    butt,
+                    errorLabel
                 }
             };
         }
 
         private async void NavigateButton_OnClickedInLogin(object sender, EventArgs e, Button butt)
         {
-            await Navigation.PushAsync(new HomePage());
+            if (Crit())
+            {
+                await Navigation.PushAsync(new HomePage());
+            }
+            else
+            {
+                errorLabel.IsVisible = true;
+            }
+            
+        }
+
+
+        bool Crit()
+        {
+            List<User> users = MySQLManager.LoadUsers();
+
+            try
+            {
+                if (users.Where(x => x.email == emailEntry.Text).Count() < 1)
+                {
+                    return false;
+                }
+                return users.Where(x => x.email == emailEntry.Text).FirstOrDefault().password == passwordEntry.Text;
+            }
+            catch
+            {
+                return false;
+            }
+           
         }
     }
 }
