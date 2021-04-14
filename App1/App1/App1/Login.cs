@@ -11,17 +11,27 @@ namespace App1
 	{
 		public Login ()
 		{
-			Content = new StackLayout {
-				Children = {
-					new Label { Text = "- Login into your account -", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.StartAndExpand },
-					new Entry { Placeholder = "Enter your account name: ", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                    new Entry { Placeholder = "Enter your password: ", IsPassword = true, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-					
+            Button butt = new Button
+            {
+                Text = "Login",
+                BackgroundColor = Color.White,
+                BorderColor = Color.Black,
+                BorderWidth = 3,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.Center
+            };
+            butt.Clicked += async (sender, args) => NavigateButton_OnClickedInLogin(sender, args, butt);
 
-					new Label { Text = "Loginas", BackgroundColor = Color.Red }
-
-				}
+            Content = new StackLayout {
+                Children = {
+                    butt
+                }
 			};
 		}
-	}
+        private async void NavigateButton_OnClickedInLogin(object sender, EventArgs e, Button butt)
+        {
+            await Navigation.PushAsync(new HomePage());
+        }
+    }
+    
 }
