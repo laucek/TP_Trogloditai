@@ -14,7 +14,7 @@ namespace App1
             Content = new StackLayout
             {
                 Children = {
-                    
+                    new Label { Text = "Trali vali", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.StartAndExpand }
                 }
             };
         }
