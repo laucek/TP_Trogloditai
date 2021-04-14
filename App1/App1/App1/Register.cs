@@ -72,7 +72,7 @@ namespace App1
 
             errorLabel = new Label
             {
-                IsEnabled = false,
+                IsVisible = false,
                 Text = "Something went wrong, make sure your inputs meet the criteria",
                 TextColor = Color.Red,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
@@ -110,7 +110,7 @@ namespace App1
                         passwordconfirm,
 
                         butt,
-                        
+                        errorLabel
                         
                     }
                 }
@@ -123,15 +123,18 @@ namespace App1
         {
             if (!MeetsCriteria())
             {
-                errorLabel.IsEnabled = true;
-                return;
+                errorLabel.IsVisible = true;
+            }
+            else
+            {
+
+                User user = new User(0, username.Text, emailEntry.Text, password.Text, firstNameEntry.Text, DateTime.Now);
+
+                butt.Text = MySQLManager.InsertUser(user);
+
+                await Navigation.PushAsync(new Login());
             }
 
-            User user = new User(0, username.Text, emailEntry.Text, password.Text, firstNameEntry.Text, DateTime.Now);
-
-            butt.Text = MySQLManager.InsertUser(user);
-
-            await Navigation.PushAsync(new Login());
         }
 
         bool MeetsCriteria()
