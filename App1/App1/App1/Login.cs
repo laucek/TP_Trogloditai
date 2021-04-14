@@ -11,21 +11,12 @@ namespace App1
 	{
 		public Login ()
 		{
-            Button butt = new Button
-            {
-                Text = "Login",
-                BackgroundColor = Color.White,
-                BorderColor = Color.Black,
-                BorderWidth = 3,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.Center
-            };
-            butt.Clicked += async (sender, args) => NavigateButton_OnClickedInLogin(sender, args, butt);
-
             Content = new StackLayout {
                 Children = {
-                    butt
-                }
+                    new Label { Text = "Loginas",
+                        BackgroundColor = Color.Red
+                    }
+				}
 			};
 		}
         private async void NavigateButton_OnClickedInLogin(object sender, EventArgs e, Button butt)
