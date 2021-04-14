@@ -9,19 +9,53 @@ namespace App1
 {
 	public class Login : ContentPage
 	{
-		public Login ()
+        Entry userNameEntry;
+        Entry passwordEntry;
+
+        public Login ()
 		{
-			Content = new StackLayout {
+            Button butt = new Button
+            {
+                Text = "Login",
+                BackgroundColor = Color.White,
+                BorderColor = Color.Black,
+                BorderWidth = 3,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            userNameEntry = new Entry
+            {
+                Placeholder = "Enter your first name",
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            passwordEntry = new Entry
+            {
+                Placeholder = "Enter your password",
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                IsPassword = true
+            };
+
+            butt.Clicked += async (sender, args) => OnButtonClicked(sender, args, butt);
+
+            Content = new StackLayout {
 				Children = {
-					new Label { Text = "- Login into your account -", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.StartAndExpand },
-					new Entry { Placeholder = "Enter your account name: ", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                    new Entry { Placeholder = "Enter your password: ", IsPassword = true, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-					
 
-					new Label { Text = "Loginas", BackgroundColor = Color.Red }
-
+					new Label { Text = "Login into your account", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.StartAndExpand },
+                    userNameEntry,
+                    passwordEntry,
+                    
+                    butt
 				}
 			};
-		}
-	}
+        }
+
+        void OnButtonClicked(object sender, EventArgs args, Button butt)
+        {
+            butt.Text = userNameEntry.Text;
+        }
+    }
 }
