@@ -105,7 +105,7 @@ namespace App1
         void OnButtonClicked(object sender, EventArgs args, Button butt)
         {
 
-            User user = new User(username.Text, emailEntry.Text, password.Text, firstNameEntry.Text, DateTime.Now);
+            User user = new User(0, username.Text, emailEntry.Text, password.Text, firstNameEntry.Text, DateTime.Now);
 
             butt.Text = MySQLManager.InsertUser(user);
 
