@@ -27,42 +27,42 @@ namespace App1
                 BorderColor = Color.Black,
                 BorderWidth = 3,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
             firstNameEntry = new Entry
             {
                 Placeholder = "Enter your first name",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
             username = new Entry
             {
                 Placeholder = "Enter your user name",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
             emailEntry = new Entry
             {
                 Placeholder = "Enter your email address",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
             password = new Entry
             {
                 Placeholder = "Enter your password",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
             passwordconfirm = new Entry
             {
                 Placeholder = "Confirm your passsword",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
             butt.Clicked += async (sender, args) => OnButtonClicked(sender, args, butt);
@@ -71,24 +71,24 @@ namespace App1
             {
                 Children = {
                     //First name
-					new Label { Text = "First name:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.Center },
+					new Label { Text = "First name:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                     firstNameEntry,
 
                     //User name
-                    new Label { Text = "User name*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.Center },
+                    new Label { Text = "User name*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                     username,
 
                     //Email
-                    new Label { Text = "E-Mail address:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.Center },
+                    new Label { Text = "E-Mail address:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                     emailEntry,
 
 
                     //Password
-                    new Label { Text = "Password: *", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.Center },
+                    new Label { Text = "Password: *", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                     password,
 
                     //Password confirmation
-                    new Label { Text = "Password confirmation*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.Center },
+                    new Label { Text = "Password confirmation*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                     passwordconfirm,                
 
                     butt
