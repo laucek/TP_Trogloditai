@@ -11,6 +11,7 @@ namespace App1
 {
     public class Register : ContentPage
     {
+
         Entry firstNameEntry;
         Entry username;
         Entry emailEntry;
@@ -19,6 +20,7 @@ namespace App1
 
         public Register()
         {
+            
 
             Button butt = new Button
             {
@@ -67,39 +69,52 @@ namespace App1
 
             butt.Clicked += async (sender, args) => OnButtonClicked(sender, args, butt);
 
-            Content = new StackLayout
+            ScrollView scrollView = new ScrollView
             {
-                Children = {
-                    //First name
-					new Label { Text = "First name:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                    firstNameEntry,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Content = new StackLayout
+                {
+                    Children =
+                    {
+                        //First name
+					    new Label { Text = "First name:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        firstNameEntry,
 
-                    //User name
-                    new Label { Text = "User name*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                    username,
+                        //User name
+                        new Label { Text = "User name*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        username,
 
-                    //Email
-                    new Label { Text = "E-Mail address:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                    emailEntry,
+                        //Email
+                        new Label { Text = "E-Mail address:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        emailEntry,
 
 
-                    //Password
-                    new Label { Text = "Password: *", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                    password,
+                        //Password
+                        new Label { Text = "Password: *", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        password,
 
-                    //Password confirmation
-                    new Label { Text = "Password confirmation*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                    passwordconfirm,                
+                        //Password confirmation
+                        new Label { Text = "Password confirmation*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        passwordconfirm,
 
-                    butt
+                        butt
+                    }
+                }
+            };
 
-                    //new Button { Text = "Register", BackgroundColor = Color.White, BorderColor = Color.Black, BorderWidth = 3,
-                    //HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand }
+            Content = scrollView;
+            //{
+                
+            //    Children = {
+                    
+
+            //        //new Button { Text = "Register", BackgroundColor = Color.White, BorderColor = Color.Black, BorderWidth = 3,
+            //        //HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand }
 
                     
-                }
+            //    }
 
-            };
+            //};
         }
 
         void OnButtonClicked(object sender, EventArgs args, Button butt)
