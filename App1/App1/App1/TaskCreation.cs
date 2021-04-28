@@ -118,7 +118,12 @@ namespace App1
         {
             try
             {
-                return true;
+                if (taskName.Text.Length >= 3 && Question.Text.Length >= 3 && Description.Text.Length >= 3 && Answer.Text.Length >= 3)
+                {
+                    return true;
+                }
+
+                return false;
             }
             catch
             {

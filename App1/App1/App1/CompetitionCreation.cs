@@ -233,7 +233,7 @@ namespace App1
                 int type = LiveType.SelectedIndex;
                 Assets.Competition comp = new Assets.Competition(0, eventName.Text, startDate.Date, endDate.Date, description.Text, type, Session.Id);
                 int compIndex = MySQLManager.InsertCompetition(comp);
-
+                 
                 foreach (var item in seed.Tasks)
                 {
                     item.fk_Competition_id = compIndex;
@@ -241,7 +241,6 @@ namespace App1
                 }
 
                 await Navigation.PushAsync(new HomePage());
-
             }
         }
 
@@ -249,7 +248,7 @@ namespace App1
         {
             try
             {
-                if (eventName.Text.Length >= 3 && description.Text.Length >= 6 && endDate.Date >= startDate.Date && seed.Tasks.Count >= 5)
+                if (eventName.Text.Length >= 3 && description.Text.Length >= 6 && endDate.Date >= startDate.Date && seed.Tasks.Count >= 3)
                 {
                     return true;
                 }

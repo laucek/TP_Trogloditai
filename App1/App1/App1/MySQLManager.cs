@@ -84,9 +84,10 @@ namespace App1
                 {
                     con.Open();
 
-                    MySqlCommand cmd = new MySqlCommand("INSERT INTO Competition (event_name, start_time, end_time, description, Live_event, fk_Usersid) values " +
-                    "(@name, @start, @end, @desc, @live, @fk", con);
-
+                    //MySqlCommand cmd = new MySqlCommand("INSERT INTO Competition (event_name, start_time, end_time, description, Live_event, fk_Usersid) values " +
+                    //"(@name, @start, @end, @desc, @live, @fk", con);
+                    MySqlCommand cmd = new MySqlCommand(@"INSERT INTO Competition (event_name, start_time, end_time, description, Live_event, fk_Usersid) values (@name, @start, @end, @desc, @live, @fk)", con);
+                    
                     cmd.Parameters.AddWithValue("@name", comp.Name);
                     cmd.Parameters.AddWithValue("@start", comp.StartDate);
                     cmd.Parameters.AddWithValue("@end", comp.EndDate);
