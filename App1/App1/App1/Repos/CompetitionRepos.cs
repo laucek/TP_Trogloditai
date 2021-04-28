@@ -66,10 +66,9 @@ namespace App1.Repos
         {
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"INSERT INTO `Competition`(`id`, `event_name`, `start_time`, `end_time`, `description`, `Live_event`, `fk_Usersid`)
-                        VALUES (?id,?name,?startdate,?enddate,?description,?live,?creator)";
+            string sqlquery = @"INSERT INTO `Competition`(`event_name`, `start_time`, `end_time`, `description`, `Live_event`, `fk_Usersid`)
+                        VALUES (?name,?startdate,?enddate,?description,?live,?creator)";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            mySqlCommand.Parameters.Add("?id", MySqlDbType.Int32).Value = comp.Id;
             mySqlCommand.Parameters.Add("?name", MySqlDbType.String).Value = comp.Name;
             mySqlCommand.Parameters.Add("?startdate", MySqlDbType.DateTime).Value = comp.StartDate;
             mySqlCommand.Parameters.Add("?enddate", MySqlDbType.DateTime).Value = comp.EndDate;

@@ -69,10 +69,9 @@ namespace App1.DBControllers
         {
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"INSERT INTO `Task`(`id`, `task_name`, `description`, `latitude`, `longitude`, `question`, `answer`, `fk_Competitionid`) 
-                            VALUES (?id,?taskname, ?description,?latitude,?longitude,?question,?answer,?competition)";
+            string sqlquery = @"INSERT INTO `Task`(`task_name`, `description`, `latitude`, `longitude`, `question`, `answer`, `fk_Competitionid`) 
+                            VALUES (?taskname, ?description,?latitude,?longitude,?question,?answer,?competition)";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            mySqlCommand.Parameters.Add("?id", MySqlDbType.Int32).Value = task.id;
             mySqlCommand.Parameters.Add("?taskname", MySqlDbType.String).Value = task.TaskName;
             mySqlCommand.Parameters.Add("?description", MySqlDbType.String).Value = task.Description;
             mySqlCommand.Parameters.Add("?latitude", MySqlDbType.Double).Value = task.latitude;
