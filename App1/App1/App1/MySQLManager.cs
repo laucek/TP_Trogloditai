@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using MySqlConnector;
+using App1.Assets;
 
 namespace App1
 {
@@ -71,7 +72,75 @@ namespace App1
             {
                 return new List<User>();
             }
+        }
 
+        public static string InsertCompetition(Competition comp)
+        {
+            try
+            {
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection con = new MySqlConnection(connStr);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+
+                    MySqlCommand cmd = new MySqlCommand("insert into Competition (event_name, start_time, end_time, description, Live_event, fk_Usersid) values " +
+                    "(@name, @start, @end, @desc, @live, @fk, @fk)", con);
+
+                    cmd.Parameters.AddWithValue("@name", comp.Name);
+                    cmd.Parameters.AddWithValue("@start", comp.StartDate);
+                    cmd.Parameters.AddWithValue("@end", comp.EndDate);
+                    cmd.Parameters.AddWithValue("@desc", comp.Description);
+                    cmd.Parameters.AddWithValue("@live", comp.LiveType);
+                    cmd.Parameters.AddWithValue("@fk", comp.fk_CreatorId);
+
+                    cmd.ExecuteNonQuery();
+
+                    con.Close();
+                    return "Success";
+                }
+            }
+            catch (MySqlException ex)
+            {
+                return "Failure";
+            }
+
+            return "WALAS";
+        }
+
+        public static string InsertTask(Task task)
+        {
+            try
+            {
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection con = new MySqlConnection(connStr);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+
+                    MySqlCommand cmd = new MySqlCommand("insert into Task (task_name, description, latitude, longitude, question, answer, fk_Competitionid) values " +
+                    "(@name, @desc, @lati, @longi, @quest, @ans, @fk)", con);
+
+                    cmd.Parameters.AddWithValue("@name", task.TaskName);
+                    cmd.Parameters.AddWithValue("@desc", task.Description);
+                    cmd.Parameters.AddWithValue("@lati", task.latitude);
+                    cmd.Parameters.AddWithValue("@longi", task.longitude);
+                    cmd.Parameters.AddWithValue("@quest", task.Question);
+                    cmd.Parameters.AddWithValue("@ans", task.Answer);
+                    cmd.Parameters.AddWithValue("@fk", task.fk_Competition_id);
+
+                    cmd.ExecuteNonQuery();
+
+                    con.Close();
+                    return "Success";
+                }
+            }
+            catch (MySqlException ex)
+            {
+                return "Failure";
+            }
+
+            return "WALAS";
         }
     }
 }
