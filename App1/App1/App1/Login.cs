@@ -16,15 +16,6 @@ namespace App1
         Entry passwordEntry;
         Label errorLabel;
 
-        private static ISettings AppSettings =>
-            CrossSettings.Current;
-
-        public static string UserName
-        {
-            get => AppSettings.GetValueOrDefault(nameof(UserName), string.Empty);
-            set => AppSettings.AddOrUpdateValue(nameof(emailEntry), value);
-        }
-
         public Login ()
         {
             Button butt = new Button
@@ -84,7 +75,7 @@ namespace App1
                 User usr = users.Where(x => x.email == emailEntry.Text).FirstOrDefault();
 
                 setUserSession(usr);
-                await Navigation.PushAsync(new HomePage());
+                await Navigation.PushAsync(new EditAccount());
             }
             else
             {

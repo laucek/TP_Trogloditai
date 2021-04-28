@@ -142,5 +142,34 @@ namespace App1
 
             return "WALAS";
         }
+
+        public static bool UpdateUserInfo(User user)
+        {
+            try
+            {
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection conn = new MySqlConnection(connStr);
+
+                string sqlquery = "UPDATE Users a SET a.username=?usrn, a.email=?ema, a.password=?pass, a.first_name=?frst WHERE a.id=?idas";
+
+                MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, conn);
+                mySqlCommand.Parameters.Add("?idas", MySqlDbType.Int32).Value = user.id;
+                mySqlCommand.Parameters.Add("?usrn", MySqlDbType.VarChar).Value = user.username;
+                mySqlCommand.Parameters.Add("?ema", MySqlDbType.VarChar).Value = user.email;
+                mySqlCommand.Parameters.Add("?pass", MySqlDbType.VarChar).Value = user.password;
+                mySqlCommand.Parameters.Add("?frst", MySqlDbType.VarChar).Value = user.first_name;
+
+
+                conn.Open();
+                mySqlCommand.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
     }
 }
