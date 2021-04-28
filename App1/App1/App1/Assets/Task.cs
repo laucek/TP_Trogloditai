@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel;
 
 namespace App1.Assets
 {
@@ -26,6 +27,5 @@ namespace App1.Assets
             Answer = answer;
             this.fk_Competition_id = fk_Competition_id;
         }
-
     }
 }
