@@ -20,7 +20,7 @@ namespace App1
         }
         private async void NavigateButton_OnClickedReg(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new CompetitionCreation(new competitionCreationSeed()));
+            await Navigation.PushAsync(new Register());
         }
         
     }
