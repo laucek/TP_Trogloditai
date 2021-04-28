@@ -18,7 +18,7 @@ namespace App1
             Content = new StackLayout
             {
                 Children = {
-                    new Label { Text = "placeholder text", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.StartAndExpand }
+                    new Label { Text = Session.Email, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.StartAndExpand }
 
                 }
             };

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +15,15 @@ namespace App1
         Entry emailEntry;
         Entry passwordEntry;
         Label errorLabel;
+
+        private static ISettings AppSettings =>
+            CrossSettings.Current;
+
+        public static string UserName
+        {
+            get => AppSettings.GetValueOrDefault(nameof(UserName), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(emailEntry), value);
+        }
 
         public Login ()
         {
@@ -36,7 +48,7 @@ namespace App1
 
             emailEntry = new Entry
             {
-                Placeholder = "Enter your first name",
+                Placeholder = "Enter your email address",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
@@ -65,8 +77,13 @@ namespace App1
 
         private async void NavigateButton_OnClickedInLogin(object sender, EventArgs e, Button butt)
         {
+
             if (Crit())
             {
+                List<User> users = MySQLManager.LoadUsers();
+                User usr = users.Where(x => x.email == emailEntry.Text).FirstOrDefault();
+
+                setUserSession(usr);
                 await Navigation.PushAsync(new HomePage());
             }
             else
@@ -87,13 +104,24 @@ namespace App1
                 {
                     return false;
                 }
-                return users.Where(x => x.email == emailEntry.Text).FirstOrDefault().password == passwordEntry.Text;
+                User usr = users.Where(x => x.email == emailEntry.Text).FirstOrDefault();
+                return usr.password == passwordEntry.Text;
             }
             catch
             {
                 return false;
             }
            
+        }
+
+        void setUserSession(User user)
+        {
+            Session.Id = user.id;
+            Session.Email = user.email;
+            Session.Password = user.password;
+            Session.Firstname = user.first_name;
+            Session.Username = user.username;
+            Session.Registrationdate = user.registration_date;
         }
     }
 }
