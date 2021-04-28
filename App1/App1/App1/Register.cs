@@ -20,6 +20,7 @@ namespace App1
         Entry passwordconfirm;
 
         Label errorLabel;
+        Label errorLabel2;
 
         public Register()
         {
@@ -81,6 +82,15 @@ namespace App1
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
+            errorLabel2 = new Label
+            {
+                IsVisible = false,
+                Text = "This email is already registered",
+                TextColor = Color.Red,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
             butt.Clicked += async (sender, args) => await OnButtonClicked(sender, args, butt);
 
             ScrollView scrollView = new ScrollView
@@ -112,7 +122,8 @@ namespace App1
                         passwordconfirm,
 
                         butt,
-                        errorLabel
+                        errorLabel,
+                        errorLabel2
                         
                     }
                 }
@@ -132,6 +143,12 @@ namespace App1
 
                 User user = new User(0, username.Text, emailEntry.Text, password.Text, firstNameEntry.Text, DateTime.Now);
 
+                if (!MeetsCriteria2(user))
+                {
+                    errorLabel2.IsVisible = true;
+                    return;
+                }
+
                 butt.Text = MySQLManager.InsertUser(user);
 
                 await Navigation.PushAsync(new Login());
@@ -141,7 +158,6 @@ namespace App1
 
         bool MeetsCriteria()
         {
-
             try
             {
                 if (firstNameEntry.Text.Length >= 3 && username.Text.Length >= 3 && emailEntry.Text.Length >= 6 && emailEntry.Text.Contains("@") && password.Text.Length >= 3)
@@ -157,6 +173,25 @@ namespace App1
             {
                 return false;
             }
+        }
+
+        bool MeetsCriteria2(User user)
+        {
+            try
+            {
+                var users = MySQLManager.LoadUsers();
+
+                if(users.Where(x => x.email == user.email).Count() > 0)
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
