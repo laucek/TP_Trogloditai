@@ -74,7 +74,7 @@ namespace App1
             }
         }
 
-        public static string InsertCompetition(Competition comp)
+        public static int InsertCompetition(Competition comp)
         {
             try
             {
@@ -84,8 +84,8 @@ namespace App1
                 {
                     con.Open();
 
-                    MySqlCommand cmd = new MySqlCommand("insert into Competition (event_name, start_time, end_time, description, Live_event, fk_Usersid) values " +
-                    "(@name, @start, @end, @desc, @live, @fk, @fk)", con);
+                    MySqlCommand cmd = new MySqlCommand("INSERT INTO Competition (event_name, start_time, end_time, description, Live_event, fk_Usersid) values " +
+                    "(@name, @start, @end, @desc, @live, @fk", con);
 
                     cmd.Parameters.AddWithValue("@name", comp.Name);
                     cmd.Parameters.AddWithValue("@start", comp.StartDate);
@@ -97,15 +97,15 @@ namespace App1
                     cmd.ExecuteNonQuery();
 
                     con.Close();
-                    return "Success";
+                    return (int)cmd.LastInsertedId;
                 }
             }
             catch (MySqlException ex)
             {
-                return "Failure";
+                return -1;
             }
 
-            return "WALAS";
+            return -1;
         }
 
         public static string InsertTask(Task task)
