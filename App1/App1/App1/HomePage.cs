@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 
 namespace App1
 {
@@ -11,10 +12,14 @@ namespace App1
     {
         public HomePage()
         {
+            //Map map = new Map();
+            //Content = map;
+
             Content = new StackLayout
             {
                 Children = {
-                    new Label { Text = "Trali vali", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.StartAndExpand }
+                    new Label { Text = "placeholder text", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.StartAndExpand }
+
                 }
             };
         }
