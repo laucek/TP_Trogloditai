@@ -89,7 +89,7 @@ namespace App1
 
         private async void NavigateButton_OnClickedCompetitionCreation(object sender, EventArgs e, Button competitionCreate)
         {
-            await Navigation.PushAsync(new CompetitionCreation());
+            await Navigation.PushAsync(new CompetitionCreation(new competitionCreationSeed()));
         }
 
         private async void NavigateButton_OnClickedSettings(object sender, EventArgs e, Button settings)
