@@ -64,6 +64,61 @@ namespace App1.Repos
             }
             return comp;
         }
+
+        public List<Competition> getFavoriteCompetition()
+        {
+            List<Competition> comp = new List<Competition>();
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string sqlquery = @"SELECT * FROM Competition c ORDER BY (select COUNT(a.fk_Competitionid) from Favorite a where a.fk_Competitionid = c.id) DESC";
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+            mySqlConnection.Open();
+            MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
+            DataTable dt = new DataTable();
+            mda.Fill(dt);
+            mySqlConnection.Close();
+
+            foreach (DataRow item in dt.Rows)
+            {
+                comp.Add(new Competition(Convert.ToInt32(item["id"]),
+                    Convert.ToString(item["event_name"]),
+                    Convert.ToDateTime(item["start_time"]),
+                    Convert.ToDateTime(item["end_time"]),
+                    Convert.ToString(item["description"]),
+                    Convert.ToInt32(item["Live_event"]),
+                    Convert.ToInt32(item["fk_Usersid"]))
+               );
+            }
+            return comp;
+        }
+
+        public List<Competition> getFavoriteCompetition(int id)
+        {
+            List<Competition> comp = new List<Competition>();
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string sqlquery = @"SELECT * FROM Competition c INNER JOIN Favorite a on c.id = a.fk_Competitionid WHERE a.fk_Usersid =" + id;
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+            mySqlConnection.Open();
+            MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
+            DataTable dt = new DataTable();
+            mda.Fill(dt);
+            mySqlConnection.Close();
+
+            foreach (DataRow item in dt.Rows)
+            {
+                comp.Add(new Competition(Convert.ToInt32(item["id"]),
+                    Convert.ToString(item["event_name"]),
+                    Convert.ToDateTime(item["start_time"]),
+                    Convert.ToDateTime(item["end_time"]),
+                    Convert.ToString(item["description"]),
+                    Convert.ToInt32(item["Live_event"]),
+                    Convert.ToInt32(item["fk_Usersid"]))
+               );
+            }
+            return comp;
+        }
+
         public bool addCompetition(Competition comp)
         {
             string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
