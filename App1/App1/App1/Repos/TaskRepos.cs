@@ -6,16 +6,16 @@ using System.Configuration;
 using MySqlConnector;
 using System.Data;
 
-namespace App1.DBControllers
+namespace App1.Repos
 {
     class TaskRepos
     {
         public List<Task> getTasks()
         {
             List<Task> task = new List<Task>();
-            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"SELECT * FROM `Task` WHERE 1";
+            string sqlquery = @"SELECT * FROM `Task`";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
             mySqlConnection.Open();
             MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
@@ -38,12 +38,13 @@ namespace App1.DBControllers
             return task;
         }
 
-        public List<Task> getTasks(int id)
+        //Gets tasks by competition ID
+        public List<Task> getTasks(int fkid)
         {
             List<Task> task = new List<Task>();
-            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"SELECT * FROM `Task` WHERE id="+ id;
+            string sqlquery = @"SELECT * FROM `Task` WHERE fk_Competitionid="+ fkid;
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
             mySqlConnection.Open();
             MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
@@ -67,7 +68,7 @@ namespace App1.DBControllers
         }
         public bool addTask(Task task)
         {
-            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"INSERT INTO `Task`(`task_name`, `description`, `latitude`, `longitude`, `question`, `answer`, `fk_Competitionid`) 
                             VALUES (?taskname, ?description,?latitude,?longitude,?question,?answer,?competition)";
@@ -87,7 +88,7 @@ namespace App1.DBControllers
         }
         public void deleteTask(int id)
         {
-            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"DELETE FROM `Task` WHERE id=?id";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
