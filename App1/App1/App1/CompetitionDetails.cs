@@ -84,6 +84,7 @@ namespace App1
 
             FavoriteButton.Clicked += async (sender, args) => FavoriteButtonOnClick(sender, args, FavoriteButton, selectedComp);
             PostCommentButton.Clicked += async (sender, args) => PostCommentOnClick(sender, args, commentEntry, selectedComp);
+            EnterButton.Clicked += async (sender, args) => EnterButtonOnClick(sender, args, selectedComp);
 
             ScrollView scrollView = new ScrollView
             {
@@ -109,6 +110,12 @@ namespace App1
             };
 
             Content = scrollView;
+        }
+
+        private void EnterButtonOnClick(object sender, EventArgs e, Competition selectedCom)
+        {
+            //To enter page
+            return;
         }
 
 
