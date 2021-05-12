@@ -4,7 +4,7 @@ using System.Text;
 
 namespace App1.Assets
 {
-    class Favorite
+    public class Favorite
     {
         public int id { get; set; }
         public int fk_Competitionsid { get; set; }

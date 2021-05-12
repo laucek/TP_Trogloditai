@@ -1,9 +1,10 @@
-﻿using App1.Assets;
-using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Text;
+using App1.Assets;
+using System.Configuration;
+using MySqlConnector;
+using System.Data;
 
 namespace App1.Repos
 {

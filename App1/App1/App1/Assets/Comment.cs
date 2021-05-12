@@ -4,7 +4,7 @@ using System.Text;
 
 namespace App1.Assets
 {
-    class Comment
+    public class Comment
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

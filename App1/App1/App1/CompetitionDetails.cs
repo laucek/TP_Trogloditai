@@ -18,7 +18,7 @@ namespace App1
                 Text = "☆",
                 HeightRequest = 50,
                 WidthRequest = 50,
-                FontSize = 38,
+                FontSize = 30,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 TextColor = Color.Yellow,
@@ -119,13 +119,14 @@ namespace App1
             if (isFavorited(selectedCom))
             {
                 button.BackgroundColor = Color.Orange;
-                favRep.deleteFavorite(Session.Id, selectedCom.Id);
+                MySQLManager.DeleteFavorite(new Favorite(0, selectedCom.Id, Session.Id));
+                button.BackgroundColor = Color.LightGray;
             }
             else
             {
                 Favorite fav = new Favorite(0, selectedCom.Id, Session.Id);
-                favRep.addFavorite(fav);
-                button.BackgroundColor = Color.LightGray;
+                MySQLManager.InsertFavorite(fav);
+                button.BackgroundColor = Color.Orange;
             }
 
         }
@@ -147,7 +148,9 @@ namespace App1
 
                     try
                     {
-                        commentRep.addComment(com);
+                        MySQLManager.InsertComment(com);
+                        entry.Text = "";
+                        entry.IsVisible = false;
                     }
                     catch
                     {
@@ -174,11 +177,11 @@ namespace App1
         private bool isFavorited(Competition selectedComp)
         {
             FavoriteRepos rep = new FavoriteRepos();
-            List<Favorite> fvs = rep.getFavoriteList(Session.Id);
+            List<Favorite> fvs = MySQLManager.LoadFavs();
 
             foreach (var item in fvs)
             {
-                if(item.fk_Competitionsid == selectedComp.Id)
+                if(item.fk_Competitionsid == selectedComp.Id && item.fk_Usersid == Session.Id)
                 {
                     return true;
                 }

@@ -74,6 +74,124 @@ namespace App1
             }
         }
 
+        public static string DeleteFavorite(Favorite fav)
+        {
+            try
+            {
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection con = new MySqlConnection(connStr);
+                if (con.State == ConnectionState.Closed)
+                {
+                    string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                    MySqlConnection mySqlConnection = new MySqlConnection(conn);
+                    string sqlquery = $@"DELETE FROM Favorite WHERE fk_Competitionid = {fav.fk_Competitionsid} AND fk_Usersid = {fav.fk_Usersid}";
+                    MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+                    mySqlConnection.Open();
+                    mySqlCommand.ExecuteNonQuery();
+                    mySqlConnection.Close();
+
+                    return "Success";
+                }
+            }
+            catch (MySqlException ex)
+            {
+                return "Failure";
+            }
+
+            return "WALAS";
+        }
+
+        public static string InsertComment(Comment com)
+        {
+            try
+            {
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection con = new MySqlConnection(connStr);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+
+                    string sqlquery = @"INSERT INTO `Comment`(`post_date`, `comment`, `fk_Competitionid`, `fk_Usersid`)
+                        VALUES (?date,?comm,?fkusid,?fkcompid)";
+                    MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, con);
+                    mySqlCommand.Parameters.Add("?date", MySqlDbType.DateTime).Value = com.Date;
+                    mySqlCommand.Parameters.Add("?comm", MySqlDbType.String).Value = com.Commentaras;
+                    mySqlCommand.Parameters.Add("?fkusid", MySqlDbType.Int32).Value = com.fk_Usersid;
+                    mySqlCommand.Parameters.Add("?fkcompid", MySqlDbType.Int32).Value = com.fk_Competitionsid;
+                    mySqlCommand.ExecuteNonQuery();
+
+                    con.Close();
+                    return "Success";
+                }
+            }
+            catch (MySqlException ex)
+            {
+                return "Failure";
+            }
+
+            return "WALAS";
+        }
+
+        public static string InsertFavorite(Favorite fav)
+        {
+            try
+            {
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection con = new MySqlConnection(connStr);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+
+                    MySqlCommand cmd = new MySqlCommand("insert into Favorite (fk_Usersid, fk_Competitionid) values " +
+                    "(@usid, @cmpid)", con);
+
+                    cmd.Parameters.AddWithValue("@cmpid", fav.fk_Competitionsid);
+                    cmd.Parameters.AddWithValue("@usid", fav.fk_Usersid);
+                    cmd.ExecuteNonQuery();
+
+                    con.Close();
+                    return "Success";
+                }
+            }
+            catch (MySqlException ex)
+            {
+                return "Failure";
+            }
+
+            return "WALAS";
+        }
+
+        public static List<Favorite> LoadFavs()
+        {
+            try
+            {
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection conn = new MySqlConnection(connStr);
+
+                conn.Open();
+
+                string sql = "SELECT * FROM Favorite";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                List<Favorite> favs = new List<Favorite>();
+
+                while (rdr.Read())
+                {
+                    Favorite usr = new Favorite(int.Parse(rdr[0].ToString()), int.Parse(rdr[1].ToString()), int.Parse(rdr[2].ToString()));
+
+                    favs.Add(usr);
+                }
+                rdr.Close();
+
+                return favs;
+            }
+            catch (Exception ex)
+            {
+                return new List<Favorite>();
+            }
+        }
+
         public static int InsertCompetition(Competition comp)
         {
             try
