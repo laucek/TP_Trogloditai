@@ -13,9 +13,19 @@ namespace App1
         Label Label;
         public CompetitionList()
         {
+            Button seeLive = new Button
+            {
+                Text = "Peržiūrėti aktyvius",
+                BackgroundColor = Color.White,
+                BorderColor = Color.Black,
+                BorderWidth = 3,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
             Button butt = new Button
             {
-                Text = "Login",
+                Text = "Peržiūrėti visus",
                 BackgroundColor = Color.White,
                 BorderColor = Color.Black,
                 BorderWidth = 3,
@@ -32,7 +42,8 @@ namespace App1
             };
 
 
-            butt.Clicked += async (sender, args) => NavigateButton_OnClickedInLogin(sender, args, butt);
+            seeLive.Clicked += async (sender, args) => NavigateButton_OnClickedInLogin(sender, args, seeLive);
+            butt.Clicked += async (sender, args) => NavigateButton_OnClickedInAllComps(sender, args, butt);
 
             ScrollView scrollView = new ScrollView
             {
@@ -43,6 +54,7 @@ namespace App1
                     {
                         new Label { Text = "Competitions list", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         Label,
+                        seeLive,
                         butt
                     }
                 }
@@ -51,13 +63,13 @@ namespace App1
             Content = scrollView;
         }
 
-        private void NavigateButton_OnClickedInLogin(object sender, EventArgs e, Button butt)
+        private void NavigateButton_OnClickedInLogin(object sender, EventArgs e, Button seeLive)
         {
 
             if (list())
             {
                 Label.IsVisible = true;
-                butt.Text = "Listas";
+                seeLive.Text = "Visi aktyvūs";
             }
             else
             {
@@ -65,7 +77,20 @@ namespace App1
             }
 
         }
+        private void NavigateButton_OnClickedInAllComps(object sender, EventArgs e, Button butt)
+        {
 
+            if (allCompetitions())
+            {
+                Label.IsVisible = true;
+                butt.Text = "Visi competitionai";
+            }
+            else
+            {
+                Label.IsVisible = true;
+            }
+
+        }
 
         public bool list()
         {
@@ -87,6 +112,26 @@ namespace App1
                 return false;
             }
             
+        }
+
+
+        public bool allCompetitions()
+        {
+            CompetitionRepos rep = new CompetitionRepos();
+            List<Competition> comps = rep.getCompetition();
+            if (comps.Count() > 0)
+            {
+                foreach (var item in comps)
+                {
+                    Label.Text += item.Name + "  ----  " + item.StartDate.ToString("yyyy-MM-dd") + "  ----  " + item.EndDate.ToString("yyyy-MM-dd") + "\n";
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 
