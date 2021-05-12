@@ -18,7 +18,7 @@ namespace App1
                 Text = "☆",
                 HeightRequest = 50,
                 WidthRequest = 50,
-                FontSize = 30,
+                FontSize = 25,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 TextColor = Color.Yellow,
@@ -40,7 +40,13 @@ namespace App1
             {
                 editButton = new Button()
                 {
-                    Text = "Padarykit edit buttona kam reiks, hf"
+                    IsVisible = true,
+                    Text = "Edit",
+                    BackgroundColor = Color.White,
+                    BorderColor = Color.Black,
+                    BorderWidth = 3,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
                 };
             }
             else
@@ -85,6 +91,8 @@ namespace App1
             FavoriteButton.Clicked += async (sender, args) => FavoriteButtonOnClick(sender, args, FavoriteButton, selectedComp);
             PostCommentButton.Clicked += async (sender, args) => PostCommentOnClick(sender, args, commentEntry, selectedComp);
             EnterButton.Clicked += async (sender, args) => EnterButtonOnClick(sender, args, selectedComp);
+            editButton.Clicked += async (sender, args) => await EditButtonClick(sender, args, editButton, selectedComp);
+            
 
             ScrollView scrollView = new ScrollView
             {
@@ -94,7 +102,7 @@ namespace App1
                     Children =
                     {
                         new Label { Text = selectedComp.Name, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                        new Label { Text = $"Created by: {selectedComp.Name}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        new Label { Text = $"Created by: {selectedComp.Name}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand }, //cia pakeisti i user username
                         new Label { Text = $"{selectedComp.Description}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         new Label { Text = $"Total tasks: {tasks.Count}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         FavoriteButton,
@@ -117,7 +125,11 @@ namespace App1
             //To enter page
             return;
         }
-
+        
+        private async System.Threading.Tasks.Task EditButtonClick(object sender, EventArgs e, Button button, Competition selectedCom)
+        {
+            await Navigation.PushAsync(new EditCompetition(selectedCom));
+        }
 
         private void FavoriteButtonOnClick(object sender, EventArgs e, Button button, Competition selectedCom)
         {
