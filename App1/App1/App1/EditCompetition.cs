@@ -5,16 +5,17 @@ using Xamarin.Forms;
 
 namespace App1
 {
-    class EditAccount : ContentPage
+    class EditCompetition : ContentPage
     {
-        Entry emailEntry;
-        Entry passwordEntry;
-        Entry usernameEntry;
-        Entry firstnameEntry;
-        Entry repeatPasswordEntry;
+        Entry eventName;
+        DatePicker startDate;
+        DatePicker endDate;
+        Entry description;
+        Picker LiveType;
         Label errorLabel;
 
-        public EditAccount()
+
+        public EditCompetition()
         {
             Button butt = new Button
             {
@@ -27,39 +28,42 @@ namespace App1
             };
 
 
-            emailEntry = new Entry
+            eventName = new Entry
             {
-                Text = Session.Email,
+                Text = "Pavadinimo keitimas",
+                Placeholder = "Atleast 3 characters",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
-
-            passwordEntry = new Entry
+            startDate = new DatePicker
             {
-                Text = Session.Password,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.CenterAndExpand,
-                IsPassword = true
-            };
-            repeatPasswordEntry = new Entry
-            {
-                Text = Session.Password,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.CenterAndExpand,
-                IsPassword = true
-            };
-
-            usernameEntry = new Entry
-            {
-                Text = Session.Username,
+                Date = DateTime.Now,
+                MinimumDate = DateTime.Now,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
-            firstnameEntry = new Entry
+            endDate = new DatePicker
             {
-                Text = Session.Firstname,
+                Date = DateTime.Now.AddDays(50),
+                MinimumDate = DateTime.Now,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            description = new Entry
+            {
+                
+                Text = ,
+                Placeholder = "Describe your competition",
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            LiveType = new Picker
+            {
+                WidthRequest = 100,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
@@ -109,7 +113,7 @@ namespace App1
                 }
             };
             Content = scrollView;
-            
+
         }
 
 

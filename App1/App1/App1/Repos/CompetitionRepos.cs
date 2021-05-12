@@ -13,7 +13,7 @@ namespace App1.Repos
         public List<Competition> getCompetition()
         {
             List<Competition> comp = new List<Competition>();
-            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"SELECT `id`, `event_name`, `start_time`, `end_time`, `description`, `Live_event`, `fk_Usersid` FROM `Competition` WHERE 1";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
@@ -39,7 +39,7 @@ namespace App1.Repos
         public List<Competition> getCompetition(int id)
         {
             List<Competition> comp = new List<Competition>();
-            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"SELECT * FROM `Competition` WHERE id=" + id;
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
@@ -64,7 +64,7 @@ namespace App1.Repos
         }
         public bool addCompetition(Competition comp)
         {
-            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"INSERT INTO `Competition`(`event_name`, `start_time`, `end_time`, `description`, `Live_event`, `fk_Usersid`)
                         VALUES (?name,?startdate,?enddate,?description,?live,?creator)";
@@ -81,9 +81,29 @@ namespace App1.Repos
 
             return true;
         }
+
+        public bool updateCompetition(Competition comp)
+        {
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string sqlquery = @"UPDATE Competition a SET a.event_name=?ev, a.start_time=?start, a.end_time=?end, a.description=?des, a.Live_event=?live WHERE a.fk_Usersid=?idas";
+
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+            mySqlCommand.Parameters.Add("?ev", MySqlDbType.String).Value = comp.Name;
+            mySqlCommand.Parameters.Add("?start", MySqlDbType.DateTime).Value = comp.StartDate;
+            mySqlCommand.Parameters.Add("?end", MySqlDbType.DateTime).Value = comp.EndDate;
+            mySqlCommand.Parameters.Add("?des", MySqlDbType.String).Value = comp.Description;
+            mySqlCommand.Parameters.Add("?live", MySqlDbType.Int32).Value = comp.LiveType;
+            mySqlConnection.Open();
+            mySqlCommand.ExecuteNonQuery();
+            mySqlConnection.Close();
+
+            return true;
+        }
+
         public void deleteCompetition(int id)
         {
-            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"DELETE FROM `Competition` WHERE id=?id";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
