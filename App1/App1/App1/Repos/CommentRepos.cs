@@ -60,7 +60,7 @@ namespace App1.Repos
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"DELETE FROM `Comment` WHERE id=?id";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            mySqlCommand.Parameters.Add("?id", MySqlDbType.Int32).Value = Session.id;
+            mySqlCommand.Parameters.Add("?id", MySqlDbType.Int32).Value = Session.Id;
             mySqlConnection.Open();
             mySqlCommand.ExecuteNonQuery();
             mySqlConnection.Close();
