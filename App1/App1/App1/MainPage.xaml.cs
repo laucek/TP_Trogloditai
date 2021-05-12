@@ -17,6 +17,7 @@ namespace App1
         private async void NavigateButton_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new Login());
+            //await Navigation.PushAsync(new CompetitionList());
         }
         private async void NavigateButton_OnClickedReg(object sender, EventArgs e)
         {

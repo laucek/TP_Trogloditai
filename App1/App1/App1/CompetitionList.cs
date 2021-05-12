@@ -12,7 +12,7 @@ namespace App1
     public class CompetitionList : ContentPage
     {
         Label Label;
-        public CompetitionList(int ind = 0)
+        public CompetitionList(int ind = 0, int sortIndex = -1)
         {
             Button seeLive = new Button
             {
@@ -36,6 +36,23 @@ namespace App1
 
             CompetitionRepos rep = new CompetitionRepos();
             List<Competition> comps = rep.getCompetition();
+            switch (sortIndex)
+            {
+                case 0:
+                    comps = comps.OrderByDescending(i => i.Name).ToList();
+                    break;
+                case 1:
+                    comps = comps.OrderBy(i => i.Name).ToList();
+                    break;
+                case 2:
+                    comps = comps.OrderByDescending(i => i.StartDate).ToList();
+                    break;
+                case 3:
+                    comps = comps.OrderBy(i => i.StartDate).ToList();
+                    break;
+                default:
+                    break;
+            }
 
             Button competition1 = new Button();
             Button competition2 = new Button();
@@ -64,7 +81,7 @@ namespace App1
                     WidthRequest = 250
                 };
             }
-            if(comps.Count > ind * 5 + 2)
+            if(comps.Count >= ind * 5 + 2)
             {
                 competition2 = new Button()
                 {
@@ -78,7 +95,7 @@ namespace App1
                     WidthRequest = 250
                 };
             }
-            if(comps.Count > ind * 5 + 2)
+            if(comps.Count >= ind * 5 + 3)
             {
                 competition3 = new Button()
                 {
@@ -92,7 +109,7 @@ namespace App1
                     WidthRequest = 250
                 };
             }
-            if(comps.Count > ind * 5 + 3)
+            if(comps.Count >= ind * 5 + 4)
             {
                 competition4 = new Button()
                 {
@@ -106,7 +123,7 @@ namespace App1
                     WidthRequest = 250
                 };
             }
-            if(comps.Count > ind * 5 + 4)
+            if(comps.Count >= ind * 5 + 5)
             {
                 competition5 = new Button()
                 {
@@ -121,8 +138,6 @@ namespace App1
                 };
             }
             
-
-
             Label = new Label
             {
                 IsVisible = false,
@@ -131,12 +146,27 @@ namespace App1
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
+            var criteriaList = new List<string>();
+            criteriaList.Add("Name Descending");
+            criteriaList.Add("Name Ascending");
+            criteriaList.Add("Start Date Descending");
+            criteriaList.Add("Start Date Ascending");
+
+            Picker picker = new Picker
+            {
+                Title = "Sort Competitions",
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            picker.ItemsSource = criteriaList;
 
             //seeLive.Clicked += async (sender, args) => NavigateButton_OnClickedInLogin(sender, args, seeLive);
 
             bool allow = competition1.IsVisible && competition2.IsVisible && competition3.IsVisible && competition4.IsVisible && competition5.IsVisible;
 
-            butt.Clicked += async (sender, args) => await NavigateButton_OnClickedInAllComps(sender, args, ind, allow);
+            butt.Clicked += async (sender, args) => await NavigateButton_OnClickedInAllComps(sender, args, ind, allow, sortIndex);
+
+            picker.SelectedIndexChanged += (sender, args) => NavigatePicker_OnClickedInAllComps(picker);
 
             competition1.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[0 * ind]);
             competition2.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[1 * ind]);
@@ -158,7 +188,8 @@ namespace App1
                         competition3,
                         competition4,
                         competition5,
-                        butt
+                        butt,
+                        picker
                     }
                 }
             };
@@ -169,6 +200,26 @@ namespace App1
         async System.Threading.Tasks.Task GoToCompetitonDetails(object sender, EventArgs args, Competition comp)
         {
             await Navigation.PushAsync(new CompetitionDetails(comp));
+        }
+
+        private void NavigatePicker_OnClickedInAllComps(Picker picker)
+        {
+            if (picker.SelectedIndex == 0)
+            {
+                Navigation.PushAsync(new CompetitionList(0, 0));
+            }
+            if (picker.SelectedIndex == 1)
+            {
+                Navigation.PushAsync(new CompetitionList(0, 1));
+            }
+            if (picker.SelectedIndex == 2)
+            {
+                Navigation.PushAsync(new CompetitionList(0, 2));
+            }
+            if (picker.SelectedIndex == 3)
+            {
+                Navigation.PushAsync(new CompetitionList(0, 3));
+            }
         }
 
         private void NavigateButton_OnClickedInLogin(object sender, EventArgs e, Button seeLive)
@@ -185,10 +236,10 @@ namespace App1
             }
 
         }
-        async System.Threading.Tasks.Task NavigateButton_OnClickedInAllComps(object sender, EventArgs e, int i, bool allow)
+        async System.Threading.Tasks.Task NavigateButton_OnClickedInAllComps(object sender, EventArgs e, int i, bool allow, int sortIndex)
         {
             if(allow)
-                await Navigation.PushAsync(new CompetitionList(i + 1));
+                await Navigation.PushAsync(new CompetitionList(i + 1, sortIndex));
         }
 
         public bool list()
