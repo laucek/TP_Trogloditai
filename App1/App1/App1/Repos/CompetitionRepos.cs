@@ -15,7 +15,8 @@ namespace App1.Repos
             List<Competition> comp = new List<Competition>();
             string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"SELECT `id`, `event_name`, `start_time`, `end_time`, `description`, `Live_event`, `fk_Usersid` FROM `Competition` WHERE 1";
+            //string sqlquery = @"SELECT `id`, `event_name`, `start_time`, `end_time`, `description`, `Live_event`, `fk_Usersid` FROM `Competition` WHERE 1";
+            string sqlquery = @"SELECT * FROM `Competition`";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
             mySqlConnection.Open();
             MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
@@ -36,6 +37,7 @@ namespace App1.Repos
             }
             return comp;
         }
+
         public List<Competition> getCompetition(int id)
         {
             List<Competition> comp = new List<Competition>();
