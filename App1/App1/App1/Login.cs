@@ -75,7 +75,6 @@ namespace App1
                 User usr = users.Where(x => x.email == emailEntry.Text).FirstOrDefault();
 
                 setUserSession(usr);
-                //await Navigation.PushAsync(new EditAccount());
                 await Navigation.PushAsync(new HomePage());
             }
             else
