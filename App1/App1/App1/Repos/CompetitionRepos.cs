@@ -13,7 +13,7 @@ namespace App1.Repos
         public List<Competition> getCompetition()
         {
             List<Competition> comp = new List<Competition>();
-            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"SELECT `id`, `event_name`, `start_time`, `end_time`, `description`, `Live_event`, `fk_Usersid` FROM `Competition` WHERE 1";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
@@ -39,7 +39,7 @@ namespace App1.Repos
         public List<Competition> getCompetition(int id)
         {
             List<Competition> comp = new List<Competition>();
-            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"SELECT * FROM `Competition` WHERE id=" + id;
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
