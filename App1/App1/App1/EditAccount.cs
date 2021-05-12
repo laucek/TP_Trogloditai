@@ -18,7 +18,7 @@ namespace App1
         {
             Button butt = new Button
             {
-                Text = "Login",
+                Text = "Change settings",
                 BackgroundColor = Color.White,
                 BorderColor = Color.Black,
                 BorderWidth = 3,
