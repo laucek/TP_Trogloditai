@@ -88,7 +88,7 @@ namespace App1.Repos
         {
             string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"UPDATE Competition a SET a.event_name=?ev, a.start_time=?start, a.end_time=?end, a.description=?des, a.Live_event=?live WHERE a.fk_Usersid=?idas";
+            string sqlquery = @"UPDATE Competition a SET a.event_name=?ev, a.start_time=?start, a.end_time=?end, a.description=?des, a.Live_event=?live WHERE a.id=" + comp.Id;
 
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
             mySqlCommand.Parameters.Add("?ev", MySqlDbType.String).Value = comp.Name;

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using App1.Assets;
+using App1.Repos;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
@@ -15,7 +17,7 @@ namespace App1
         Label errorLabel;
 
 
-        public EditCompetition()
+        public EditCompetition(Competition selectedComp)
         {
             Button butt = new Button
             {
@@ -30,7 +32,7 @@ namespace App1
 
             eventName = new Entry
             {
-                Text = "Pavadinimo keitimas",
+                Text = "Event name",
                 Placeholder = "Atleast 3 characters",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
@@ -55,7 +57,7 @@ namespace App1
             description = new Entry
             {
                 
-                Text = ,
+                Text = selectedComp.Description,
                 Placeholder = "Describe your competition",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
@@ -77,7 +79,7 @@ namespace App1
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
-            butt.Clicked += async (sender, args) => NavigateButton_OnClickedInLogin(sender, args, butt);
+            butt.Clicked += async (sender, args) => NavigateButton_OnClickedInEditComp(sender, args, butt, selectedComp);
 
             ScrollView scrollView = new ScrollView
             {
@@ -87,25 +89,25 @@ namespace App1
 
                     new Label { Text = "Change account info", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.StartAndExpand },
                         //First name
-					    new Label { Text = "First name:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                        firstnameEntry,
+					    new Label { Text = "Competition name: *", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        eventName,
 
                         //User name
-                        new Label { Text = "User name*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                        usernameEntry,
+                        new Label { Text = "Start date: *", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        startDate,
 
                         //Email
-                        new Label { Text = "E-Mail address:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                        emailEntry,
+                        new Label { Text = "End date: *", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        endDate,
 
 
                         //Password
-                        new Label { Text = "Password: *", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                        passwordEntry,
+                        new Label { Text = "Descriotion: *", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        description,
 
                         //Password confirmation
-                        new Label { Text = "Password confirmation*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                        repeatPasswordEntry,
+                        new Label { Text = "LiveType: *", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        LiveType,
 
                         butt,
                         errorLabel
@@ -117,13 +119,15 @@ namespace App1
         }
 
 
-        private void NavigateButton_OnClickedInLogin(object sender, EventArgs e, Button butt)
+        private void NavigateButton_OnClickedInEditComp(object sender, EventArgs e, Button butt, Competition selectedComp)
         {
             if (Crit())
             {
-                User user = new User(Session.Id, usernameEntry.Text, emailEntry.Text, passwordEntry.Text, firstnameEntry.Text, Session.Registrationdate);
-                MySQLManager.UpdateUserInfo(user);
-                butt.Text = passwordEntry.Text;
+                int type = 1;
+                Competition comp = new Competition(selectedComp.Id, eventName.Text, startDate.Date, endDate.Date,description.Text, type, selectedComp.fk_CreatorId);
+                CompetitionRepos compet = new CompetitionRepos();
+                compet.updateCompetition(comp);
+                butt.Text = eventName.Text;
             }
             else
             {
@@ -135,12 +139,9 @@ namespace App1
         {
             try
             {
-                if (firstnameEntry.Text.Length >= 3 && usernameEntry.Text.Length >= 3 && passwordEntry.Text.Length >= 6 && emailEntry.Text.Contains("@") && emailEntry.Text.Contains("."))
+                if (eventName.Text.Length >= 3  && description.Text.Length >= 5)
                 {
-                    if (passwordEntry.Text == repeatPasswordEntry.Text)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
                 return false;
 

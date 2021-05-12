@@ -86,19 +86,18 @@ namespace App1.DBControllers
             return true;
         }
 
-
         public bool updateTasks(Task task, int id)
         {
             string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"UPDATE Task a SET a.task_name=?ev, a.description=?des, a.latitude=?lat, a.longitude=?lon, a.question=?que, a.answer=?ans WHERE a.fk_Competitionid=?idas";
-
+            string sqlquery = @"UPDATE Task a SET a.task_name=?tsk, a.description=?des, a.latitude=?lat, a.longitude=?lon, a.question=?que, a.answer=?ans WHERE a.fk_Competitionid=?idas";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            mySqlCommand.Parameters.Add("?ev", MySqlDbType.String).Value = comp.Name;
-            mySqlCommand.Parameters.Add("?start", MySqlDbType.DateTime).Value = comp.StartDate;
-            mySqlCommand.Parameters.Add("?end", MySqlDbType.DateTime).Value = comp.EndDate;
-            mySqlCommand.Parameters.Add("?des", MySqlDbType.String).Value = comp.Description;
-            mySqlCommand.Parameters.Add("?live", MySqlDbType.Int32).Value = comp.LiveType;
+            mySqlCommand.Parameters.Add("?ev", MySqlDbType.String).Value = task.TaskName;
+            mySqlCommand.Parameters.Add("?start", MySqlDbType.String).Value = task.Description;
+            mySqlCommand.Parameters.Add("?end", MySqlDbType.DateTime).Value = task.latitude;
+            mySqlCommand.Parameters.Add("?des", MySqlDbType.String).Value = task.longitude;
+            mySqlCommand.Parameters.Add("?des", MySqlDbType.String).Value = task.Question;
+            mySqlCommand.Parameters.Add("?live", MySqlDbType.Int32).Value = task.Answer;
             mySqlConnection.Open();
             mySqlCommand.ExecuteNonQuery();
             mySqlConnection.Close();
