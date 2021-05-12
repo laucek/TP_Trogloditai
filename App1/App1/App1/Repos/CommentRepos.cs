@@ -14,7 +14,7 @@ namespace App1.Repos
             List<Comment> com = new List<Comment>();
             string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"SELECT * FROM `Comment` WHERE fk_Usersid=" + Session.Id;
+            string sqlquery = @"SELECT * FROM `Comment` WHERE fk_Competitionid=" + id;
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
             mySqlConnection.Open();
             MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
@@ -60,7 +60,7 @@ namespace App1.Repos
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"DELETE FROM `Comment` WHERE id=?id";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            mySqlCommand.Parameters.Add("?id", MySqlDbType.Int32).Value = Session.id;
+            mySqlCommand.Parameters.Add("?id", MySqlDbType.Int32).Value = id;
             mySqlConnection.Open();
             mySqlCommand.ExecuteNonQuery();
             mySqlConnection.Close();

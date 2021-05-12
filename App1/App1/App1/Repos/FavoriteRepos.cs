@@ -14,7 +14,7 @@ namespace App1.Repos
             List<Favorite> fav = new List<Favorite>();
             string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"SELECT * FROM `Favorite` WHERE fk_Usersid=" + Session.Id;
+            string sqlquery = @"SELECT * FROM `Favorite` WHERE fk_Usersid=" + id;
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
             mySqlConnection.Open();
             MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
@@ -37,12 +37,11 @@ namespace App1.Repos
         {
             string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"INSERT INTO `Favorite`(`id`, `fk_Usersid`, `fk_Competitionid`)
-                        VALUES (?idas,?usr,?com)";
+            string sqlquery = @"INSERT INTO `Favorite`(`fk_Usersid`, `fk_Competitionid`)
+                        VALUES (?usr,?com)";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            mySqlCommand.Parameters.Add("?name", MySqlDbType.String).Value = fav.id;
-            mySqlCommand.Parameters.Add("?startdate", MySqlDbType.DateTime).Value = fav.fk_Usersid;
-            mySqlCommand.Parameters.Add("?enddate", MySqlDbType.DateTime).Value = fav.fk_Competitionsid;
+            mySqlCommand.Parameters.Add("?usr", MySqlDbType.Int32).Value = fav.fk_Usersid;
+            mySqlCommand.Parameters.Add("?com", MySqlDbType.Int32).Value = fav.fk_Competitionsid;
             mySqlConnection.Open();
             mySqlCommand.ExecuteNonQuery();
             mySqlConnection.Close();
@@ -50,13 +49,12 @@ namespace App1.Repos
             return true;
         }
 
-        public void deleteCompetition(int id)
+        public void deleteFavorite(int Userid, int compId)
         {
             string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"DELETE FROM `Favorite` WHERE id=?id";
+            string sqlquery = $@"SELECT * FROM `Favorite` WHERE fk_Usersid = {Userid} AND fk_Competitionid = {compId}";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            mySqlCommand.Parameters.Add("?id", MySqlDbType.Int32).Value = id;
             mySqlConnection.Open();
             mySqlCommand.ExecuteNonQuery();
             mySqlConnection.Close();

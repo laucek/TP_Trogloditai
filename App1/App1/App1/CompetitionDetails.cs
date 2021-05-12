@@ -18,10 +18,11 @@ namespace App1
                 Text = "☆",
                 HeightRequest = 50,
                 WidthRequest = 50,
-                FontSize = 40,
+                FontSize = 38,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                TextColor = Color.Yellow
+                TextColor = Color.Yellow,
+                BackgroundColor = Color.LightGray
                 
             };
 
@@ -76,8 +77,13 @@ namespace App1
                 VerticalOptions = LayoutOptions.CenterAndExpand,
             };
 
+            if (isFavorited(selectedComp))
+            {
+                FavoriteButton.BackgroundColor = Color.Orange;
+            }
+
             FavoriteButton.Clicked += async (sender, args) => FavoriteButtonOnClick(sender, args, FavoriteButton, selectedComp);
-            PostCommentButton.Clicked += async (sender, args) => PostCommentOnClick(sender, args, commentEntry);
+            PostCommentButton.Clicked += async (sender, args) => PostCommentOnClick(sender, args, commentEntry, selectedComp);
 
             ScrollView scrollView = new ScrollView
             {
@@ -108,18 +114,23 @@ namespace App1
 
         private void FavoriteButtonOnClick(object sender, EventArgs e, Button button, Competition selectedCom)
         {
+            FavoriteRepos favRep = new FavoriteRepos();
+
             if (isFavorited(selectedCom))
             {
                 button.BackgroundColor = Color.Orange;
+                favRep.deleteFavorite(Session.Id, selectedCom.Id);
             }
             else
             {
-                button.BackgroundColor = Color.White;
+                Favorite fav = new Favorite(0, selectedCom.Id, Session.Id);
+                favRep.addFavorite(fav);
+                button.BackgroundColor = Color.LightGray;
             }
 
         }
 
-        private void PostCommentOnClick(object sender, EventArgs e, Entry entry)
+        private void PostCommentOnClick(object sender, EventArgs e, Entry entry, Competition comp)
         {
             if (!entry.IsVisible)
             {
@@ -131,6 +142,17 @@ namespace App1
                 if (meetsCommentCriteria(entry))
                 {
                     //Post a comment
+                    CommentRepos commentRep = new CommentRepos();
+                    Comment com = new Comment(0, DateTime.Now, entry.Text, comp.Id, Session.Id);
+
+                    try
+                    {
+                        commentRep.addComment(com);
+                    }
+                    catch
+                    {
+                        return;
+                    }
                 }
                 else
                 {
@@ -151,7 +173,18 @@ namespace App1
 
         private bool isFavorited(Competition selectedComp)
         {
-            return true;
+            FavoriteRepos rep = new FavoriteRepos();
+            List<Favorite> fvs = rep.getFavoriteList(Session.Id);
+
+            foreach (var item in fvs)
+            {
+                if(item.fk_Competitionsid == selectedComp.Id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 
