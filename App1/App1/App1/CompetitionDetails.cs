@@ -92,29 +92,60 @@ namespace App1
             PostCommentButton.Clicked += async (sender, args) => PostCommentOnClick(sender, args, commentEntry, selectedComp);
             EnterButton.Clicked += async (sender, args) => EnterButtonOnClick(sender, args, selectedComp);
             editButton.Clicked += async (sender, args) => await EditButtonClick(sender, args, editButton, selectedComp);
-            
+            List<User> users = MySQLManager.LoadUsers();
+            User usr = users.Where(x => x.id == selectedComp.fk_CreatorId).FirstOrDefault();
+
+            StackLayout C = new StackLayout();
+            C.Children.Add(new Label { Text = selectedComp.Name, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
+            C.Children.Add(new Label { Text = $"Created by: {usr.username}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
+            C.Children.Add(new Label { Text = $"{selectedComp.Description}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
+            C.Children.Add(new Label { Text = $"Total tasks: {tasks.Count}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
+            C.Children.Add(FavoriteButton);
+            C.Children.Add(editButton);
+            C.Children.Add(EnterButton);
+            C.Children.Add(new Label { Text = $"Comments:", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
+            C.Children.Add(commentEntry);
+            C.Children.Add(PostCommentButton);
+
+            List<Comment> comments = MySQLManager.LoadCommentByCompetition(selectedComp.Id);
+
+
+
+            foreach (var item in comments)
+            {
+                C.Children.Add(new Label
+                {
+                    Text = $"{users.Where(x => x.id == item.fk_Usersid).FirstOrDefault().username}:{comments.Count}\n" +
+                    $"{item.Commentaras}\n",
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                    WidthRequest = 200,
+                    HeightRequest = 200
+                });
+            }
 
             ScrollView scrollView = new ScrollView
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                Content = new StackLayout
-                {
-                    Children =
-                    {
-                        new Label { Text = selectedComp.Name, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                        new Label { Text = $"Created by: {selectedComp.Name}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand }, //cia pakeisti i user username
-                        new Label { Text = $"{selectedComp.Description}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                        new Label { Text = $"Total tasks: {tasks.Count}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                        FavoriteButton,
-                        editButton,
-                        EnterButton,
-                        new Label { Text = $"Comments:", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                        commentEntry,
-                        PostCommentButton
+                Content = C
+                //Content = new StackLayout
+                //{
+                //    Children =
+                //    {
+                //        new Label { Text = selectedComp.Name, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                //        new Label { Text = $"Created by: {usr.username}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                //        new Label { Text = $"{selectedComp.Description}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                //        new Label { Text = $"Total tasks: {tasks.Count}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                //        FavoriteButton,
+                //        editButton,
+                //        EnterButton,
+                //        new Label { Text = $"Comments:", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                //        commentEntry,
+                //        PostCommentButton
 
 
-                    }
-                }
+                //    }
+                //}
             };
 
             Content = scrollView;

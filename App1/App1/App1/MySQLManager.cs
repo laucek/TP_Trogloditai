@@ -42,6 +42,39 @@ namespace App1
             return "WALAS";
         }
 
+
+        public static User GetUserById(int id)
+        {
+            try
+            {
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection conn = new MySqlConnection(connStr);
+
+                conn.Open();
+
+                string sql = "SELECT * FROM Users WHERE id=" + id;
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                List<User> users = new List<User>();
+
+                while (rdr.Read())
+                {
+                    User usr = new User(int.Parse(rdr[0].ToString()), rdr[1].ToString(), rdr[2].ToString(),
+                        rdr[3].ToString(), rdr[4].ToString(), DateTime.Parse(rdr[5].ToString()));
+
+                    users.Add(usr);
+                }
+                rdr.Close();
+
+                return users[0];
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public static List<User> LoadUsers()
         {
             try
@@ -159,6 +192,38 @@ namespace App1
             }
 
             return "WALAS";
+        }
+
+        public static List<Comment> LoadCommentByCompetition(int competitionId)
+        {
+            try
+            {
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection conn = new MySqlConnection(connStr);
+
+                conn.Open();
+
+                string sql = "SELECT * FROM Comment WHERE fk_Competitionid="+ competitionId;
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                List<Comment> comment = new List<Comment>();
+
+                while (rdr.Read())
+                {
+                    Comment cmt = new Comment(int.Parse(rdr[0].ToString()), DateTime.Parse(rdr[1].ToString()),
+                        rdr[2].ToString(), int.Parse(rdr[3].ToString()), int.Parse(rdr[4].ToString()));
+
+                    comment.Add(cmt);
+                }
+                rdr.Close();
+
+                return comment;
+            }
+            catch (Exception ex)
+            {
+                return new List<Comment>();
+            }
         }
 
         public static List<Favorite> LoadFavs()
