@@ -144,9 +144,11 @@ namespace App1
         private async System.Threading.Tasks.Task EnterButtonOnClick(object sender, EventArgs e, Competition selectedCom)
         {
             //To enter page
-            return;
+            ParticipationObject po = new ParticipationObject(selectedCom);
+            await Navigation.PushAsync(new CompetitionParticipation(po));
+
         }
-        
+
         private async System.Threading.Tasks.Task EditButtonClick(object sender, EventArgs e, Button button, Competition selectedCom)
         {
             await Navigation.PushAsync(new EditCompetition(selectedCom));

@@ -292,6 +292,39 @@ namespace App1
             return -1;
         }
 
+        public static List<Task> GetTasksByCompetition(int compId)
+        {
+            try
+            {
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection conn = new MySqlConnection(connStr);
+
+                conn.Open();
+
+                string sql = "SELECT * FROM Task WHERE fk_Competitionid=" + compId;
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                List<Task> tasks = new List<Task>();
+
+                while (rdr.Read())
+                {
+                    Task cmt = new Task(int.Parse(rdr[0].ToString()), rdr[1].ToString(),
+                        rdr[2].ToString(), double.Parse(rdr[3].ToString()), double.Parse(rdr[4].ToString()), rdr[5].ToString(), rdr[6].ToString()
+                        , int.Parse(rdr[7].ToString()));
+
+                    tasks.Add(cmt);
+                }
+                rdr.Close();
+
+                return tasks;
+            }
+            catch (Exception ex)
+            {
+                return new List<Task>();
+            }
+        }
+
         public static string InsertTask(Task task)
         {
             try
