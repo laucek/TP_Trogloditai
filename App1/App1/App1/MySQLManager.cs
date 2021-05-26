@@ -145,7 +145,7 @@ namespace App1
                     con.Open();
 
                     string sqlquery = @"INSERT INTO `Comment`(`post_date`, `comment`, `fk_Competitionid`, `fk_Usersid`)
-                        VALUES (?date,?comm,?fkusid,?fkcompid)";
+                        VALUES (?date,?comm,?fkcompid,?fkusid)";
                     MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, con);
                     mySqlCommand.Parameters.Add("?date", MySqlDbType.DateTime).Value = com.Date;
                     mySqlCommand.Parameters.Add("?comm", MySqlDbType.String).Value = com.Commentaras;
