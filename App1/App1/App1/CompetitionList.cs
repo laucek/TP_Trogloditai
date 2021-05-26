@@ -219,11 +219,11 @@ namespace App1
             picker.SelectedIndexChanged += (sender, args) => NavigatePicker_OnClickedInAllComps(picker);
             filterPicker.SelectedIndexChanged += (sender, args) => NavigateFilterPicker_OnClickedInAllComps(filterPicker);
 
-            competition1.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[0 * ind]);
-            competition2.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[1 * ind]);
-            competition3.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[2 * ind]);
-            competition4.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[3 * ind]);
-            competition5.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[4 * ind]);
+            competition1.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[ind * 5]);
+            competition2.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[ind * 5 + 1]);
+            competition3.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[ind * 5 + 2]);
+            competition4.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[ind * 5 + 3]);
+            competition5.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[ind * 5 + 4]);
 
             ScrollView scrollView = new ScrollView
             {
