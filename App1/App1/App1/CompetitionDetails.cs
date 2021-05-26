@@ -90,7 +90,7 @@ namespace App1
 
             FavoriteButton.Clicked += async (sender, args) => FavoriteButtonOnClick(sender, args, FavoriteButton, selectedComp);
             PostCommentButton.Clicked += async (sender, args) => PostCommentOnClick(sender, args, commentEntry, selectedComp);
-            EnterButton.Clicked += async (sender, args) => EnterButtonOnClick(sender, args, selectedComp);
+            EnterButton.Clicked += async (sender, args) => await EnterButtonOnClick(sender, args, selectedComp);
             editButton.Clicked += async (sender, args) => await EditButtonClick(sender, args, editButton, selectedComp);
             List<User> users = MySQLManager.LoadUsers();
             User usr = users.Where(x => x.id == selectedComp.fk_CreatorId).FirstOrDefault();
@@ -113,45 +113,35 @@ namespace App1
 
             foreach (var item in comments)
             {
-                C.Children.Add(new Label
+                try
                 {
-                    Text = $"{users.Where(x => x.id == item.fk_Usersid).FirstOrDefault().username}:{comments.Count}\n" +
-                    $"{item.Commentaras}\n",
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                    VerticalOptions = LayoutOptions.CenterAndExpand,
-                    WidthRequest = 200,
-                    HeightRequest = 200
-                });
+                    C.Children.Add(new Label
+                    {
+                        Text = $"{users.Where(x => x.id == item.fk_Usersid).FirstOrDefault().username}:{comments.Count}\n" +
+                    $"{item.Commentaras}\n{item.Date}",
+                        HorizontalOptions = LayoutOptions.CenterAndExpand,
+                        VerticalOptions = LayoutOptions.CenterAndExpand,
+                        WidthRequest = 200,
+                        HeightRequest = 150
+                    });
+                }
+                catch
+                {
+                    continue;
+                }
+                
             }
 
             ScrollView scrollView = new ScrollView
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Content = C
-                //Content = new StackLayout
-                //{
-                //    Children =
-                //    {
-                //        new Label { Text = selectedComp.Name, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                //        new Label { Text = $"Created by: {usr.username}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                //        new Label { Text = $"{selectedComp.Description}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                //        new Label { Text = $"Total tasks: {tasks.Count}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                //        FavoriteButton,
-                //        editButton,
-                //        EnterButton,
-                //        new Label { Text = $"Comments:", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                //        commentEntry,
-                //        PostCommentButton
-
-
-                //    }
-                //}
             };
 
             Content = scrollView;
         }
 
-        private void EnterButtonOnClick(object sender, EventArgs e, Competition selectedCom)
+        private async System.Threading.Tasks.Task EnterButtonOnClick(object sender, EventArgs e, Competition selectedCom)
         {
             //To enter page
             return;
@@ -201,6 +191,7 @@ namespace App1
                         MySQLManager.InsertComment(com);
                         entry.Text = "";
                         entry.IsVisible = false;
+                        Navigation.PushAsync(new CompetitionDetails(comp));
                     }
                     catch
                     {
