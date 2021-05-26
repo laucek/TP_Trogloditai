@@ -110,7 +110,6 @@ namespace App1
             List<Comment> comments = MySQLManager.LoadCommentByCompetition(selectedComp.Id);
 
 
-
             foreach (var item in comments)
             {
                 try
