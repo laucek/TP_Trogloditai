@@ -66,6 +66,31 @@ namespace App1.Repos
             }
             return task;
         }
+
+        public bool updateTask(Task task)
+        {
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string sqlquery = @"UPDATE `Task` SET
+                                    `task_name` = ?taskname,
+                                    `description` = ?description,
+                                    `latitude` = ?latitude,
+                                    `longitude` = ?longitude,
+                                    `question` = ?question,
+                                    `answer` = ?answer
+                                    WHERE id=" + task.id;
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+            mySqlCommand.Parameters.Add("?taskname", MySqlDbType.String).Value = task.TaskName;
+            mySqlCommand.Parameters.Add("?description", MySqlDbType.String).Value = task.Description;
+            mySqlCommand.Parameters.Add("?latitude", MySqlDbType.Double).Value = task.latitude;
+            mySqlCommand.Parameters.Add("?longitude", MySqlDbType.Double).Value = task.longitude;
+            mySqlCommand.Parameters.Add("?question", MySqlDbType.String).Value = task.Question;
+            mySqlCommand.Parameters.Add("?answer", MySqlDbType.String).Value = task.Answer;
+            mySqlConnection.Open();
+            mySqlCommand.ExecuteNonQuery();
+            mySqlConnection.Close();
+            return true;
+        }
         public bool addTask(Task task)
         {
             string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
@@ -86,9 +111,6 @@ namespace App1.Repos
 
             return true;
         }
-
-
-
 
         public void deleteTask(int id)
         {

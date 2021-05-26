@@ -28,12 +28,15 @@ namespace App1
 
             Button editButton = new Button();
             Button EnterButton = new Button();
-            
+            Button tasksList = new Button();
 
             TaskRepos rep = new TaskRepos();
             List<Task> tasks = rep.getTasks(selectedComp.Id);
 
             editButton.IsVisible = false;
+
+            tasksList.IsVisible = false;
+
             EnterButton.IsVisible = false;
 
             if(creator.id == Session.Id)
@@ -42,6 +45,16 @@ namespace App1
                 {
                     IsVisible = true,
                     Text = "Edit",
+                    BackgroundColor = Color.White,
+                    BorderColor = Color.Black,
+                    BorderWidth = 3,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                };
+                tasksList = new Button()
+                {
+                    IsVisible = true,
+                    Text = "Edit Tasks",
                     BackgroundColor = Color.White,
                     BorderColor = Color.Black,
                     BorderWidth = 3,
@@ -87,73 +100,55 @@ namespace App1
             {
                 FavoriteButton.BackgroundColor = Color.Orange;
             }
-
             FavoriteButton.Clicked += async (sender, args) => FavoriteButtonOnClick(sender, args, FavoriteButton, selectedComp);
             PostCommentButton.Clicked += async (sender, args) => PostCommentOnClick(sender, args, commentEntry, selectedComp);
-            EnterButton.Clicked += async (sender, args) => await EnterButtonOnClick(sender, args, selectedComp);
+            EnterButton.Clicked += async (sender, args) => EnterButtonOnClick(sender, args, selectedComp);
             editButton.Clicked += async (sender, args) => await EditButtonClick(sender, args, editButton, selectedComp);
-            List<User> users = MySQLManager.LoadUsers();
-            User usr = users.Where(x => x.id == selectedComp.fk_CreatorId).FirstOrDefault();
+            tasksList.Clicked += async (sender, args) => await OpenTasksButtonClick(sender, args, tasksList, selectedComp);
 
-            StackLayout C = new StackLayout();
-            C.Children.Add(new Label { Text = selectedComp.Name, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
-            C.Children.Add(new Label { Text = $"Created by: {usr.username}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
-            C.Children.Add(new Label { Text = $"{selectedComp.Description}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
-            C.Children.Add(new Label { Text = $"Total tasks: {tasks.Count}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
-            C.Children.Add(FavoriteButton);
-            C.Children.Add(editButton);
-            C.Children.Add(EnterButton);
-            C.Children.Add(new Label { Text = $"Comments:", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
-            C.Children.Add(commentEntry);
-            C.Children.Add(PostCommentButton);
-
-            List<Comment> comments = MySQLManager.LoadCommentByCompetition(selectedComp.Id);
-
-
-
-            foreach (var item in comments)
-            {
-                try
-                {
-                    C.Children.Add(new Label
-                    {
-                        Text = $"{users.Where(x => x.id == item.fk_Usersid).FirstOrDefault().username}:{comments.Count}\n" +
-                    $"{item.Commentaras}\n{item.Date}",
-                        HorizontalOptions = LayoutOptions.CenterAndExpand,
-                        VerticalOptions = LayoutOptions.CenterAndExpand,
-                        WidthRequest = 200,
-                        HeightRequest = 150
-                    });
-                }
-                catch
-                {
-                    continue;
-                }
-                
-            }
 
             ScrollView scrollView = new ScrollView
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                Content = C
+                Content = new StackLayout
+                {
+                    Children =
+                    {
+                        new Label { Text = selectedComp.Name, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        new Label { Text = $"Created by: {selectedComp.Name}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand }, //cia pakeisti i user username
+                        new Label { Text = $"{selectedComp.Description}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        new Label { Text = $"Total tasks: {tasks.Count}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        FavoriteButton,
+                        editButton,
+                        tasksList,
+                        EnterButton,
+                        new Label { Text = $"Comments:", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        commentEntry,
+                        PostCommentButton
+
+
+                    }
+                }
             };
 
             Content = scrollView;
         }
 
-        private async System.Threading.Tasks.Task EnterButtonOnClick(object sender, EventArgs e, Competition selectedCom)
+        private void EnterButtonOnClick(object sender, EventArgs e, Competition selectedCom)
         {
             //To enter page
-            ParticipationObject po = new ParticipationObject(selectedCom);
-            await Navigation.PushAsync(new CompetitionParticipation(po));
-
+            return;
         }
-
+        
         private async System.Threading.Tasks.Task EditButtonClick(object sender, EventArgs e, Button button, Competition selectedCom)
         {
             await Navigation.PushAsync(new EditCompetition(selectedCom));
         }
 
+        private async System.Threading.Tasks.Task OpenTasksButtonClick(object sender, EventArgs e, Button button, Competition selectedCom)
+        {
+            await Navigation.PushAsync(new CompetitionTasksList(0,selectedCom));
+        }
         private void FavoriteButtonOnClick(object sender, EventArgs e, Button button, Competition selectedCom)
         {
             FavoriteRepos favRep = new FavoriteRepos();
@@ -193,7 +188,6 @@ namespace App1
                         MySQLManager.InsertComment(com);
                         entry.Text = "";
                         entry.IsVisible = false;
-                        Navigation.PushAsync(new CompetitionDetails(comp));
                     }
                     catch
                     {
