@@ -28,12 +28,15 @@ namespace App1
 
             Button editButton = new Button();
             Button EnterButton = new Button();
-            
+            Button tasksList = new Button();
 
             TaskRepos rep = new TaskRepos();
             List<Task> tasks = rep.getTasks(selectedComp.Id);
 
             editButton.IsVisible = false;
+
+            tasksList.IsVisible = false;
+
             EnterButton.IsVisible = false;
 
             if(creator.id == Session.Id)
@@ -42,6 +45,16 @@ namespace App1
                 {
                     IsVisible = true,
                     Text = "Edit",
+                    BackgroundColor = Color.White,
+                    BorderColor = Color.Black,
+                    BorderWidth = 3,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                };
+                tasksList = new Button()
+                {
+                    IsVisible = true,
+                    Text = "Edit Tasks",
                     BackgroundColor = Color.White,
                     BorderColor = Color.Black,
                     BorderWidth = 3,
@@ -87,12 +100,12 @@ namespace App1
             {
                 FavoriteButton.BackgroundColor = Color.Orange;
             }
-
             FavoriteButton.Clicked += async (sender, args) => FavoriteButtonOnClick(sender, args, FavoriteButton, selectedComp);
             PostCommentButton.Clicked += async (sender, args) => PostCommentOnClick(sender, args, commentEntry, selectedComp);
             EnterButton.Clicked += async (sender, args) => EnterButtonOnClick(sender, args, selectedComp);
             editButton.Clicked += async (sender, args) => await EditButtonClick(sender, args, editButton, selectedComp);
-            
+            tasksList.Clicked += async (sender, args) => await OpenTasksButtonClick(sender, args, tasksList, selectedComp);
+
 
             ScrollView scrollView = new ScrollView
             {
@@ -107,6 +120,7 @@ namespace App1
                         new Label { Text = $"Total tasks: {tasks.Count}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         FavoriteButton,
                         editButton,
+                        tasksList,
                         EnterButton,
                         new Label { Text = $"Comments:", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         commentEntry,
@@ -131,6 +145,10 @@ namespace App1
             await Navigation.PushAsync(new EditCompetition(selectedCom));
         }
 
+        private async System.Threading.Tasks.Task OpenTasksButtonClick(object sender, EventArgs e, Button button, Competition selectedCom)
+        {
+            await Navigation.PushAsync(new CompetitionTasksList(0,selectedCom));
+        }
         private void FavoriteButtonOnClick(object sender, EventArgs e, Button button, Competition selectedCom)
         {
             FavoriteRepos favRep = new FavoriteRepos();

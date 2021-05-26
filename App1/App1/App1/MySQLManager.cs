@@ -73,7 +73,37 @@ namespace App1
                 return new List<User>();
             }
         }
+        public static List<Competition> LoadCompetitions()
+        {
+            try
+            {
+                string connStr = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+                MySqlConnection conn = new MySqlConnection(connStr);
 
+                conn.Open();
+
+                string sql = "SELECT * FROM Competition";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                List<Assets.Competition> comps = new List<Competition>();
+
+                while (rdr.Read())
+                {
+                    Competition comp = new Competition(int.Parse(rdr[0].ToString()), rdr[1].ToString(), DateTime.Parse(rdr[2].ToString()),
+                        DateTime.Parse(rdr[3].ToString()), rdr[4].ToString(), int.Parse(rdr[5].ToString()), int.Parse(rdr[6].ToString()));
+
+                    comps.Add(comp);
+                }
+                rdr.Close();
+
+                return comps;
+            }
+            catch (Exception ex)
+            {
+                return new List<Assets.Competition>();
+            }
+        }
         public static string DeleteFavorite(Favorite fav)
         {
             try
