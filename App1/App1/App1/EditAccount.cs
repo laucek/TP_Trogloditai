@@ -73,7 +73,7 @@ namespace App1
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
-            butt.Clicked += async (sender, args) => NavigateButton_OnClickedInLogin(sender, args, butt);
+            butt.Clicked += async (sender, args) => await NavigateButton_OnClickedInLoginAsync(sender, args, butt);
 
             ScrollView scrollView = new ScrollView
             {
@@ -113,13 +113,13 @@ namespace App1
         }
 
 
-        private void NavigateButton_OnClickedInLogin(object sender, EventArgs e, Button butt)
+        private async System.Threading.Tasks.Task NavigateButton_OnClickedInLoginAsync(object sender, EventArgs e, Button butt)
         {
             if (Crit())
             {
                 User user = new User(Session.Id, usernameEntry.Text, emailEntry.Text, passwordEntry.Text, firstnameEntry.Text, Session.Registrationdate);
                 MySQLManager.UpdateUserInfo(user);
-                butt.Text = passwordEntry.Text;
+                await Navigation.PushAsync(new ProfileDetails());
             }
             else
             {

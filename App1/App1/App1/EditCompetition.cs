@@ -56,7 +56,6 @@ namespace App1
 
             description = new Entry
             {
-
                 Text = selectedComp.Description,
                 Placeholder = "Describe your competition",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
