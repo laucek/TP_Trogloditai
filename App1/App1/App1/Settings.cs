@@ -36,7 +36,7 @@ namespace App1
                 {
                     Children =
                     {
-                        new Label { Text = Session.Language.SettingsString, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand }
+                        new Label { Text = Session.Language.SettingsString, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         picker,
                         button
                     }
