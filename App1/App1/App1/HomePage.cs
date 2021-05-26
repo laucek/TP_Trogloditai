@@ -14,7 +14,7 @@ namespace App1
         {
             Button settings = new Button
             {
-                Text = "Settings",
+                Text = Session.Language.SettingsString,
                 //FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Button)),
                 FontSize = 5,
                 BackgroundColor = Color.White,
@@ -24,7 +24,7 @@ namespace App1
 
             Button competitionList = new Button
             {
-                Text = "Competitions",
+                Text = Session.Language.CompetitionsString,
                 FontSize = 5,
                 BackgroundColor = Color.White,
                 BorderColor = Color.Black,
@@ -34,7 +34,7 @@ namespace App1
 
             Button competitionCreate = new Button
             {
-                Text = "New competition",
+                Text = Session.Language.NewCompetitionString,
                 FontSize = 5,
                 BackgroundColor = Color.White,
                 BorderColor = Color.Black,
@@ -43,7 +43,7 @@ namespace App1
 
             Button profile = new Button
             {
-                Text = "Profile",
+                Text = Session.Language.ProfileString,
                 FontSize = 5,
                 BackgroundColor = Color.White,
                 BorderColor = Color.Black,

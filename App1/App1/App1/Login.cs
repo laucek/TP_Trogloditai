@@ -20,7 +20,7 @@ namespace App1
         {
             Button butt = new Button
             {
-                Text = "Login",
+                Text = Session.Language.LoginString,
                 BackgroundColor = Color.White,
                 BorderColor = Color.Black,
                 BorderWidth = 3,
@@ -39,14 +39,14 @@ namespace App1
 
             emailEntry = new Entry
             {
-                Placeholder = "Enter your email address",
+                Placeholder = Session.Language.EnterEmailString,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
             passwordEntry = new Entry
             {
-                Placeholder = "Enter your password",
+                Placeholder = Session.Language.PasswordString,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 IsPassword = true
