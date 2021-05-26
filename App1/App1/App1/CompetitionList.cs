@@ -94,6 +94,9 @@ namespace App1
                         Label.Text = "You haven't favorited any competitions";
                     }
                     break;
+                case 2:
+                    comps = rep.getCompetition();
+                    break;
                 default:
                     break;
             }
@@ -201,6 +204,7 @@ namespace App1
             var filterCriteriaList = new List<string>();
             filterCriteriaList.Add("My competitions");
             filterCriteriaList.Add("Favorited competitions");
+            filterCriteriaList.Add("All competitions");
 
             Picker filterPicker = new Picker
             {
@@ -216,7 +220,7 @@ namespace App1
 
             butt.Clicked += async (sender, args) => await NavigateButton_OnClickedInAllComps(sender, args, ind, allow, sortIndex, filterIndex);
 
-            picker.SelectedIndexChanged += (sender, args) => NavigatePicker_OnClickedInAllComps(picker);
+            picker.SelectedIndexChanged += (sender, args) => NavigatePicker_OnClickedInAllComps(picker, filterIndex);
             filterPicker.SelectedIndexChanged += (sender, args) => NavigateFilterPicker_OnClickedInAllComps(filterPicker);
 
             competition1.Clicked += async (sender, args) => await GoToCompetitonDetails(sender, args, comps[ind * 5]);
@@ -254,7 +258,7 @@ namespace App1
             await Navigation.PushAsync(new CompetitionDetails(comp));
         }
 
-        private void NavigatePicker_OnClickedInAllComps(Picker picker)
+        private void NavigatePicker_OnClickedInAllComps(Picker picker, int filterInd)
         {
             if (picker.SelectedIndex == -1)
             {
@@ -263,27 +267,27 @@ namespace App1
             }
             if (picker.SelectedIndex == 0)
             {
-                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex));
+                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex, filterInd));
             }
             if (picker.SelectedIndex == 1)
             {
-                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex));
+                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex, filterInd));
             }
             if (picker.SelectedIndex == 2)
             {
-                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex));
+                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex, filterInd));
             }
             if (picker.SelectedIndex == 3)
             {
-                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex));
+                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex, filterInd));
             }
             if (picker.SelectedIndex == 4)
             {
-                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex));
+                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex, filterInd));
             }
             if (picker.SelectedIndex == 5)
             {
-                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex));
+                Navigation.PushAsync(new CompetitionList(0, picker.SelectedIndex, filterInd));
             }
         }
 
@@ -299,6 +303,10 @@ namespace App1
                 Navigation.PushAsync(new CompetitionList(0, 0, picker.SelectedIndex));
             }
             if (picker.SelectedIndex == 1)
+            {
+                Navigation.PushAsync(new CompetitionList(0, 0, picker.SelectedIndex));
+            }
+            if (picker.SelectedIndex == 2)
             {
                 Navigation.PushAsync(new CompetitionList(0, 0, picker.SelectedIndex));
             }
