@@ -99,7 +99,7 @@ namespace App1
 
         private async void NavigateButton_OnClickedProfile(object sender, EventArgs e, Button profile)
         {
-            await Navigation.PushAsync(new EditAccount());
+            await Navigation.PushAsync(new ProfileDetails());
         }
     }
 }

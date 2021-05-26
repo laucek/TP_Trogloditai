@@ -102,7 +102,7 @@ namespace App1
                     Children =
                     {
                         new Label { Text = selectedComp.Name, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
-                        new Label { Text = $"Created by: {selectedComp.Name}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand }, //cia pakeisti i user username
+                        new Label { Text = $"Created by: {creator.username}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand }, //cia pakeisti i user username
                         new Label { Text = $"{selectedComp.Description}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         new Label { Text = $"Total tasks: {tasks.Count}", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         FavoriteButton,

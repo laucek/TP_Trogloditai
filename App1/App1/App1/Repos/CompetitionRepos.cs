@@ -170,5 +170,25 @@ namespace App1.Repos
             mySqlConnection.Close();
         }
 
+        public int getTotalCompetitionCount(int id)
+        {
+            int naudota = 0;
+            string conn = "server=sql5.freemysqlhosting.net;user=sql5405481;database=sql5405481;port=3306;password=gvTiFVNil3";
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string sqlquery = @"SELECT count(id) as kiekis from Competition where fk_Usersid=" + id;
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+            mySqlConnection.Open();
+            MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
+            DataTable dt = new DataTable();
+            mda.Fill(dt);
+            mySqlConnection.Close();
+
+            foreach (DataRow item in dt.Rows)
+            {
+                naudota = Convert.ToInt32(item["kiekis"] == DBNull.Value ? 0 : item["kiekis"]);
+            }
+            return naudota;
+        }
+
     }
 }
