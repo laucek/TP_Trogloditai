@@ -28,7 +28,7 @@ namespace App1
 
             Button butt = new Button
             {
-                Text = "Register",
+                Text = Session.Language.Registerstring,
                 BackgroundColor = Color.White,
                 BorderColor = Color.Black,
                 BorderWidth = 3,
@@ -38,21 +38,21 @@ namespace App1
 
             firstNameEntry = new Entry
             {
-                Placeholder = "Atleast 3 characters",
+                Placeholder = Session.Language.Atleast3CharsString,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
             username = new Entry
             {
-                Placeholder = "Atleast 3 characters",
+                Placeholder = Session.Language.Atleast3CharsString,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
             emailEntry = new Entry
             {
-                Placeholder = "Enter your email address",
+                Placeholder = Session.Language.EnterEmailString,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
@@ -60,7 +60,7 @@ namespace App1
             password = new Entry
             {
                 IsPassword = true,
-                Placeholder = "Atleast 3 characters",
+                Placeholder = Session.Language.Atleast3CharsString,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
@@ -68,7 +68,7 @@ namespace App1
             passwordconfirm = new Entry
             {
                 IsPassword = true,
-                Placeholder = "Atleast 3 characters",
+                Placeholder = Session.Language.Atleast3CharsString,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
@@ -76,7 +76,7 @@ namespace App1
             errorLabel = new Label
             {
                 IsVisible = false,
-                Text = "Something went wrong, make sure your inputs meet the criteria",
+                Text = Session.Language.RegisterErrorString,
                 TextColor = Color.Red,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
@@ -101,24 +101,24 @@ namespace App1
                     Children =
                     {
                         //First name
-					    new Label { Text = "First name:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+					    new Label { Text = Session.Language.FirstNameString, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         firstNameEntry,
 
                         //User name
-                        new Label { Text = "User name*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        new Label { Text = Session.Language.UsernameString, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         username,
 
                         //Email
-                        new Label { Text = "E-Mail address:*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        new Label { Text = Session.Language.EmailString, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         emailEntry,
 
 
                         //Password
-                        new Label { Text = "Password: *", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        new Label { Text = Session.Language.PasswordString, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         password,
 
                         //Password confirmation
-                        new Label { Text = "Password confirmation*", HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
+                        new Label { Text = Session.Language.PasswordConfirmString, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand },
                         passwordconfirm,
 
                         butt,

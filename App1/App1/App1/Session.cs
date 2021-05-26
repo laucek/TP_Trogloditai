@@ -13,6 +13,6 @@ namespace App1
         public static string Firstname;
         public static DateTime Registrationdate;
 
-
+        public static Assets.Language Language = new Assets.Lithuanian();
     }
 }
